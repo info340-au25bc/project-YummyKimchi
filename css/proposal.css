@@ -49,13 +49,19 @@ section h2 {
     padding: 1rem;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
+    margin-bottom: 1rem;
 }
 
 section p {
     text-align: left;
     background-color: white;
-    padding: 1rem;
+    padding: 0 1rem 1rem 1rem;
     margin: 0;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+}
+
+ul {
+    padding: 0 1rem 1rem 2rem;
+    margin: 0;
 }
