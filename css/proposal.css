@@ -7,6 +7,10 @@ body {
     font-size: 14px;
     margin: 0;
     background-color: #b2ceeb;
+    background-image: url('/img/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 h1, h2, h3, h4, h5, h6 {
