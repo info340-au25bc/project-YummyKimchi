@@ -1,0 +1,91 @@
+/* Colors background and puts font family along with a default font size. No margins.  */
+body {
+    background-color: #c5bea9;
+    font-family: 'Encode Sans', 'Open Sans', sans-serif;
+    font-size: 1rem;
+    margin:0;
+}
+
+/* Keeps nav bar position fixed and adjusts dimensions. Color is black. Display is flex. */
+nav {
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    background-color: black;
+    display: flex;
+    margin: 0;
+    justify-content: space-between;
+}
+
+/* Colors links in nav white, removes hyperlink underline, and removes margin */
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 1.5rem;
+}
+
+/* While hovering over links, background color changes */
+nav a:hover {
+    background-color: rgb(95, 41, 41);
+}
+
+/* Keeps links on the same line in nav bar */
+nav li {
+    display: inline-flex;
+}
+
+/* Keep margins consistent */
+nav ul {
+    margin: 0;
+}
+
+/* ID keeps links to the left and no display until media selector */
+#app-links {
+    display: none;
+}
+
+
+/* ID inserts menu bars that substitute the left links on smaller (mobile) screens */
+#more-menu {
+    display:flex;
+}
+
+#app-home {
+    display: inline-flex;
+}
+
+
+@media (min-width: 600px) {
+    #more-menu {
+        display: none;
+    }
+
+    #app-links {
+        display: flex;
+    }
+}
+
+@media (min-width: 650px) {
+    body {
+        font-size: 1.1rem;
+    }
+}
+
+@media (min-width: 701px) {
+    body {
+        font-size: 1.3rem;
+    }
+}
+
+@media (min-width: 770px) {
+    body {
+        font-size: 1.5rem;
+    }
+}
+
+@media (min-width: 900px) {
+    body {
+        font-size: 1.7rem;
+    }
+}
