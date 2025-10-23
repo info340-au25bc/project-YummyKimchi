@@ -97,7 +97,7 @@ header {
     background-size: cover;
     background-position: center;
     padding: 5rem;
-    width:100%;
+    width: auto;
 }
 
 /* Class to format all headings (h1-h6) */
