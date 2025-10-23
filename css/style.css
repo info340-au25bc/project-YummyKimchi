@@ -1,7 +1,7 @@
 /* Colors background and puts font family along with a default font size. No margins.  */
 body {
     background-color: #c5bea9;
-    font-family: 'Encode Sans', 'Open Sans', sans-serif;
+    font-family: 'Encode Sans', sans-serif;
     font-size: 1rem;
     margin:0;
 }
@@ -12,7 +12,7 @@ nav {
     top:0;
     left:0;
     width: 100%;
-    background-color: black;
+    background-color: #252525;
     display: flex;
     margin: 0;
     justify-content: space-between;
@@ -23,6 +23,7 @@ nav a {
     color: white;
     text-decoration: none;
     padding: 1.5rem;
+    font-weight: bold;
 }
 
 /* While hovering over links, background color changes */
@@ -51,12 +52,23 @@ nav ul {
     display:flex;
 }
 
+/* ID holds a Menu Icon in the top right of nav bar */
 #app-home {
     display: inline-flex;
 }
 
+/* Colors home menu to make it pop out */
+div#app-home a {
+    background-color: rgb(95, 41, 41);
+}
 
-@media (min-width: 600px) {
+/* Alternate color for menu's hover color */
+div#app-home a:hover {
+    background-color: rgb(133, 42, 42);
+}
+
+
+@media (min-width: 530px) {
     #more-menu {
         display: none;
     }
@@ -66,26 +78,8 @@ nav ul {
     }
 }
 
-@media (min-width: 650px) {
-    body {
-        font-size: 1.1rem;
-    }
-}
-
-@media (min-width: 701px) {
-    body {
-        font-size: 1.3rem;
-    }
-}
-
-@media (min-width: 770px) {
-    body {
-        font-size: 1.5rem;
-    }
-}
-
 @media (min-width: 900px) {
     body {
-        font-size: 1.7rem;
+        font-size: 14px;
     }
 }
