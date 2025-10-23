@@ -26,7 +26,7 @@ nav a {
     font-weight: 900;
 }
 
-/* While hovering over links, background color changes */
+/* While hovering over links on navbar, background color changes */
 nav a:hover {
     background-color: rgb(95, 41, 41);
 }
@@ -67,6 +67,27 @@ div.app-home a:hover {
     background-color: rgb(133, 42, 42);
 }
 
+/* Nav Bar menu icon stylization */
+.menu-pic {
+    flex: 0 0 auto;
+    height: 100%;
+    width: 4rem;
+    background-color: rgb(95, 41, 41);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Nav Bar menu icon alternate hover color */
+div.more-menu .menu-pic:hover    {
+    background-color: rgb(133, 42, 42);
+}
+
+/* remove padding for element a if it is a child of a div with class more-menu */
+div.more-menu a {
+    padding: 0;
+}
+
 /* Puts in the background image for header and the proper margin/padding */
 header {
     margin-top: 4rem;
@@ -75,7 +96,8 @@ header {
         url(../../project-YummyKimchi/img/main-page-header.avif);
     background-size: cover;
     background-position: center;
-    padding: 4rem;
+    padding: 5rem;
+    position: absolute;
 }
 
 /* Class to format all headings (h1-h6) */
@@ -87,14 +109,21 @@ header {
     color:white; 
 }
 
-/* Adjusts size of h1 heading textbox */
-.heading-textbox {
-    width: 30%;
-}
-
 /* div that holds the flex boxes in the header */
 .header-textbox {
     display: flex;
+    flex-direction: column;
+    padding: 5rem;;
+}
+
+/* Adjusts size of h1 heading textbox */
+.heading-textbox {
+    width: 40%;
+}
+
+.header-paragraph {
+    color:white;
+    font-size: 2rem;
 }
 
 
@@ -106,6 +135,8 @@ header {
     .app-links {
         display: flex;
     }
+    
+    
 }
 
 @media (min-width: 900px) {
