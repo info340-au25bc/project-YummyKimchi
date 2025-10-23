@@ -6,6 +6,10 @@ body {
     margin:0;
 }
 
+body, html {
+    overflow-x: hidden;
+}
+
 /* Keeps nav bar position fixed and adjusts dimensions. Color is black. Display is flex. */
 nav {
     position: fixed;
@@ -96,11 +100,11 @@ header {
         url(../../project-YummyKimchi/img/main-page-header.avif);
     background-size: cover;
     background-position: center;
-    padding: 5rem;
-    width: auto;
+    background-repeat: no-repeat;
+    padding: 0;
 }
 
-/* Class to format all headings (h1-h6) */
+/* Class to format all headings (h1-h6). Can also be used for titling text. */
 .header {
     font-family:'Encode Sans Condensed', 'Encode Sans', sans-serif;
     font-weight:900;
@@ -121,6 +125,8 @@ header {
     width: 40%;
 }
 
+
+/* Class that formats paragraphs in the header */
 .header-paragraph {
     color:white;
     font-size: 2rem;
@@ -135,8 +141,6 @@ header {
     .app-links {
         display: flex;
     }
-    
-    
 }
 
 @media (min-width: 900px) {
