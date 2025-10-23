@@ -23,7 +23,7 @@ nav a {
     color: white;
     text-decoration: none;
     padding: 1.5rem;
-    font-weight: bold;
+    font-weight: 900;
 }
 
 /* While hovering over links, background color changes */
@@ -41,39 +41,69 @@ nav ul {
     margin: 0;
 }
 
-/* ID keeps links to the left and no display until media selector */
-#app-links {
+/* keeps links to the left and no display until media selector */
+.app-links {
     display: none;
 }
 
 
-/* ID inserts menu bars that substitute the left links on smaller (mobile) screens */
-#more-menu {
+/* inserts menu bars that substitute the left links on smaller (mobile) screens */
+.more-menu {
     display:flex;
 }
 
-/* ID holds a Menu Icon in the top right of nav bar */
-#app-home {
+/* holds a Menu Icon in the top right of nav bar */
+.app-home {
     display: inline-flex;
 }
 
-/* Colors home menu to make it pop out */
-div#app-home a {
+/* Colors divs with home menu id to make it pop out */
+div.app-home a {
     background-color: rgb(95, 41, 41);
 }
 
 /* Alternate color for menu's hover color */
-div#app-home a:hover {
+div.app-home a:hover {
     background-color: rgb(133, 42, 42);
 }
 
+/* Puts in the background image for header and the proper margin/padding */
+header {
+    margin-top: 4rem;
+    background-image: 
+        linear-gradient(to right, rgba(0, 0, 0, 1), transparent),
+        url(../../project-YummyKimchi/img/main-page-header.avif);
+    background-size: cover;
+    background-position: center;
+    padding: 4rem;
+}
 
-@media (min-width: 530px) {
-    #more-menu {
+/* Class to format all headings (h1-h6) */
+.header {
+    font-family:'Encode Sans Condensed', 'Encode Sans', sans-serif;
+    font-weight:900;
+    font-size: 4rem;
+    margin: 0; 
+    color:white; 
+}
+
+/* Adjusts size of h1 heading textbox */
+.heading-textbox {
+    width: 30%;
+}
+
+/* div that holds the flex boxes in the header */
+.header-textbox {
+    display: flex;
+}
+
+
+@media (min-width: 630px) {
+    .more-menu {
         display: none;
     }
 
-    #app-links {
+    .app-links {
         display: flex;
     }
 }
