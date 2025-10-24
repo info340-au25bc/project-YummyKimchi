@@ -4,10 +4,12 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    font-size: 1rem;
     margin: 0;
     background-color: #b2ceeb;
-    background-image: url('/img/background.jpg');
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 1), transparent),
+        url(../img/main-page-header.avif);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -15,6 +17,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 1.7rem;
 }
 
 header {
@@ -34,16 +37,16 @@ header p {
 }
 
 section {
-    max-width: 960px;
-    margin-left: 35%;
-    margin-right: 35%;
-    background-color: white;
+    max-width: 50%;
+    margin: auto;
+    background-color: #c9dbee;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     margin-bottom: 2%;
     margin-top: 2%;
+    line-height: 150%;
 }
 
 section h2 {
@@ -58,11 +61,12 @@ section h2 {
 
 section p {
     text-align: left;
-    background-color: white;
+    background-color: #c9dbee;
     padding: 0 1rem 1rem 1rem;
     margin: 0;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    font-size: 1.4rem;
 }
 
 ul {
