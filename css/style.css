@@ -25,10 +25,14 @@ nav {
 
 /* Colors links in nav white, removes hyperlink underline, and removes margin */
 nav a {
-    color: white;
-    text-decoration: none;
     padding: 1.5rem;
     font-weight: 900;
+}
+
+/* Never want a tags to be a hyperlink, wipe attributes */
+a {
+    color: white;
+    text-decoration: none;
 }
 
 /* While hovering over links on navbar, background color changes */
@@ -155,7 +159,7 @@ header {
 }
 
 /* Indicates a flex container in main */
-.main-flex-container {
+.flex-container {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
@@ -177,6 +181,13 @@ header {
 /* Formatting for subsection paragraph */
 .subsection-paragraph {
     margin-top: 0;
+}
+
+/* Foot stylizations */
+.footer {
+    font-size: 1rem;;
+    background-color: #252525;
+    justify-content: space-evenly;
 }
 
 
@@ -204,7 +215,7 @@ header {
 
 
 @media (min-width: 750px) {
-    .main-flex-container {
+    .flex-container {
         flex-wrap: nowrap;
     }
 
