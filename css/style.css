@@ -190,7 +190,7 @@ header {
     justify-content: space-evenly;
 }
 
-
+/* Media queries */
 @media (min-width: 300px) {
     body {
         font-size: 14px;
