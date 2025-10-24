@@ -2,6 +2,7 @@
 body {
     background-color: #c5bea9;
     font-family: 'Encode Sans', sans-serif;
+    color: white;
     font-size: 1rem;
     margin:0;
 }
@@ -120,16 +121,34 @@ header {
     padding: 5rem;;
 }
 
-/* Adjusts size of h1 heading textbox */
-.heading-textbox {
+/* Adjusts size of textbox */
+.textbox-width {
     width: 40%;
 }
-
 
 /* Class that formats paragraphs in the header */
 .header-paragraph {
     color:white;
     font-size: 2rem;
+}
+
+/* Section class for main element portions of text. */
+.main-section {
+    margin: 5rem 5rem;
+    padding: 1rem 1rem;
+    background-color: rgb(95, 41, 41);
+}
+
+/* Section class for element signifying it is now flex display and sorting items within as a column */
+.main-section-flex-item-column {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Section class for element signifying it is now flex display and sorting items within as a row */
+.main-section-flex-item-column {
+    display: flex;
+    flex-direction: row;
 }
 
 
