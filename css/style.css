@@ -190,7 +190,28 @@ header {
     justify-content: space-evenly;
 }
 
+/* Stylization for form */
+.login-box {
+    padding: 3rem 3rem;
+    background-color: rgb(95, 41, 41);
+    width: 25%;
+    margin: auto;
+    margin-top: 10rem;
+    
+}
+
+
 /* Media queries */
+@media (min-width: 0px) {
+    body {
+        font-size: 13px;
+    }
+
+    .header {
+        font-size: 2rem;
+    }
+}
+
 @media (min-width: 300px) {
     body {
         font-size: 14px;
