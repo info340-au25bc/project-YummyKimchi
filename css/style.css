@@ -194,10 +194,31 @@ header {
 .login-box {
     padding: 3rem 3rem;
     background-color: rgb(95, 41, 41);
-    width: 25%;
+    width: 40%;
     margin: auto;
     margin-top: 10rem;
-    
+}
+
+/* Stylization for a elements that are in class login-box element */
+.login-box a {
+    text-decoration: underline;
+    color:cyan;
+}
+
+.login-box p {
+    font-family: 'Encode Sans Condensed', sans-serif;
+    font-weight: 900;
+}
+
+/* Stylization for login submission boxes */
+.submission-box {
+    padding: 1rem 0;
+    font-size: 1rem;
+}
+
+/* Stylization for submission box label*/
+.submission-box label {
+    margin: 0.2rem 0;
 }
 
 
@@ -250,5 +271,22 @@ header {
     
     body {
         font-size: 18px;
+    }
+
+    .login-box {
+        width: 30%;
+    }
+}
+
+@media (min-width: 850px) {
+    .login-box {
+        width: 20%;
+
+    }
+}
+
+@media (min-width: 1000px) {
+    .login-box {
+        width: 14%;
     }
 }
