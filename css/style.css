@@ -1,0 +1,292 @@
+/* Colors background and puts font family along with a default font size. No margins.  */
+body {
+    background-color: #c5bea9;
+    font-family: 'Encode Sans', sans-serif;
+    color: white;
+    font-size: 1.5rem;
+    margin:0;
+}
+
+body, html {
+    overflow-x: hidden;
+}
+
+/* Keeps nav bar position fixed and adjusts dimensions. Color is black. Display is flex. */
+nav {
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    background-color: #252525;
+    display: flex;
+    margin: 0;
+    justify-content: space-between;
+}
+
+/* Colors links in nav white, removes hyperlink underline, and removes margin */
+nav a {
+    padding: 1.5rem;
+    font-weight: 900;
+}
+
+/* Never want a tags to be a hyperlink, wipe attributes */
+a {
+    color: white;
+    text-decoration: none;
+}
+
+/* While hovering over links on navbar, background color changes */
+nav a:hover {
+    background-color: rgb(95, 41, 41);
+}
+
+/* Keeps links on the same line in nav bar */
+nav li {
+    display: inline-flex;
+}
+
+/* Keep margins consistent */
+nav ul {
+    margin: 0;
+}
+
+/* keeps links to the left and no display until media selector */
+.app-links {
+    display: none;
+}
+
+
+/* inserts menu bars that substitute the left links on smaller (mobile) screens */
+.more-menu {
+    display:flex;
+}
+
+/* holds a Menu Icon in the top right of nav bar */
+.app-home {
+    display: inline-flex;
+}
+
+/* Colors divs with home menu id to make it pop out */
+div.app-home a {
+    background-color: rgb(95, 41, 41);
+}
+
+/* Alternate color for menu's hover color */
+div.app-home a:hover {
+    background-color: rgb(133, 42, 42);
+}
+
+/* Nav Bar menu icon stylization */
+.menu-pic {
+    flex: 0 0 auto;
+    height: 100%;
+    width: 4rem;
+    background-color: rgb(95, 41, 41);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Nav Bar menu icon alternate hover color */
+div.more-menu .menu-pic:hover    {
+    background-color: rgb(133, 42, 42);
+}
+
+/* remove padding for element a if it is a child of a div with class more-menu */
+div.more-menu a {
+    padding: 0;
+}
+
+/* Puts in the background image for header and the proper margin/padding */
+header {
+    margin-top: 4rem;
+    background-image: 
+        linear-gradient(to right, rgba(0, 0, 0, 1), transparent),
+        url(../../project-YummyKimchi/img/main-page-header.avif);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 0;
+    margin-bottom: 5rem;
+}
+
+/* Class to format all headings (h1-h6). Can also be used for titling text. */
+.header {
+    font-family:'Encode Sans Condensed', 'Encode Sans', sans-serif;
+    font-weight:900;
+    font-size: 1rem;
+    margin: 0; 
+    color:white; 
+}
+
+/* div that holds the flex boxes in the header */
+.header-textbox {
+    display: flex;
+    flex-direction: column;
+    padding: 5rem;;
+}
+
+/* Adjusts size of textbox */
+.textbox-width {
+    width: 40%;
+}
+
+/* Class that formats paragraphs in the header */
+.header-paragraph {
+    color:white;
+    font-size: 2rem;
+}
+
+/* Section class for main element portions of text. */
+.main-section {
+    margin: 5rem 5rem;
+    margin-top: 0;
+    padding: 3rem 3rem;
+    background-color: rgb(95, 41, 41);
+    font-size: 1.5rem;
+}
+
+/* Section class for element signifying it is now flex display and sorting items within as a column */
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Section class for element signifying it is now flex display and sorting items within as a row */
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+/* Indicates a flex container in main */
+.flex-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+/* Textbox is a subheading */
+.subheading {
+    font-family: 'Encode Sans Condensed', 'Encode Sans', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    margin: 0;
+}
+
+/* Subsection class to increase margins */
+.subsection {
+    margin:0 1rem;
+}
+
+/* Formatting for subsection paragraph */
+.subsection-paragraph {
+    margin-top: 0;
+}
+
+/* Foot stylizations */
+.footer {
+    font-size: 1rem;;
+    background-color: #252525;
+    justify-content: space-evenly;
+}
+
+/* Stylization for form */
+.login-box {
+    padding: 3rem 3rem;
+    background-color: rgb(95, 41, 41);
+    width: 40%;
+    margin: auto;
+    margin-top: 10rem;
+}
+
+/* Stylization for a elements that are in class login-box element */
+.login-box a {
+    text-decoration: underline;
+    color:cyan;
+}
+
+.login-box p {
+    font-family: 'Encode Sans Condensed', sans-serif;
+    font-weight: 900;
+}
+
+/* Stylization for login submission boxes */
+.submission-box {
+    padding: 1rem 0;
+    font-size: 1rem;
+}
+
+/* Stylization for submission box label*/
+.submission-box label {
+    margin: 0.2rem 0;
+}
+
+
+/* Media queries */
+@media (min-width: 0px) {
+    body {
+        font-size: 13px;
+    }
+
+    .header {
+        font-size: 2rem;
+    }
+}
+
+@media (min-width: 300px) {
+    body {
+        font-size: 14px;
+    }
+
+    .header {
+        font-size: 2.5rem;
+    }
+}
+
+@media (min-width: 500px) {
+    .header {
+        font-size:4rem;
+    }
+}
+
+@media (min-width: 600px) {
+    body {
+        font-size: 16px;
+    }
+}
+
+
+@media (min-width: 750px) {
+    .flex-container {
+        flex-wrap: nowrap;
+    }
+
+    .more-menu {
+        display: none;
+    }
+
+    .app-links {
+        display: flex;
+    }
+    
+    body {
+        font-size: 18px;
+    }
+
+    .login-box {
+        width: 30%;
+    }
+}
+
+@media (min-width: 850px) {
+    .login-box {
+        width: 20%;
+
+    }
+}
+
+@media (min-width: 1000px) {
+    .login-box {
+        width: 14%;
+    }
+}
