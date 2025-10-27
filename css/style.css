@@ -165,6 +165,13 @@ header {
     flex-wrap: wrap;
 }
 
+/* Main page's custom textbox flex container */
+.flex-container-main-textbox {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
 /* Textbox is a subheading */
 .subheading {
     font-family: 'Encode Sans Condensed', 'Encode Sans', sans-serif;
@@ -257,7 +264,7 @@ header {
 
 
 @media (min-width: 750px) {
-    .flex-container {
+    .flex-container-main-textbox {
         flex-wrap: nowrap;
     }
 
@@ -494,6 +501,10 @@ header {
 }
 
 @media (min-width: 750px) {
+    .flex-container-main-textbox {
+        flex-wrap: nowrap;
+    }
+
     .clothing-card {
         min-width: calc(33.333% - 1.5rem);
         flex: 1 1 calc(33.333% - 1.5rem);
