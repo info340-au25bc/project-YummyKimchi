@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Luke, Andrew, Hieu">
+    <meta name="description" content="The page that tracker where your items are">
+    <title> Items Tracker Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Encode+Sans:wdth,wght@125,900&display=swap" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Encode Sans' rel='stylesheet'>
+    <link rel="icon" type="image/png" href="../../img/shirt-icon.png">
+</head>
+
+<body>
+    <!-- Nav Bar and Header -->
+    <header>
+        <nav>
+            <div class="app-home"><a href="index.html">HOME</a></div>
+            <div class="more-menu"><a href=""><img src="../../img/menu.png" class="menu-pic" alt="Navigation menu"></a></div>
+            <div class="app-links">
+                <ul>
+                    <li><a href="">INVENTORY</a></li>
+                    <li><a href="">OUTFIT BUILDER</a></li>
+                    <li><a href="">ACCOUNT</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="header-textbox">
+            <div class="textbox-width">
+                <h1 class="header">Your Clothing Inventory</h1>
+                <p class="header-paragraph">Track, organize, and manage your wardrobe</p>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Search and Filter Section -->
+        <section class="main-section flex-container">
+            <div class="flex-column subsection" style="width: 100%;">
+                <h2 class="header">Find Your Items</h2>
+                <form class="flex-container" style="justify-content: flex-start; gap: 2rem;">
+                    <div class="flex-column submission-box">
+                        <label for="searchInput">Search Items</label>
+                        <input type="text" id="searchInput" name="search" placeholder="Enter item name...">
+                    </div>
+                    <div class="flex-column submission-box">
+                        <label for="categoryFilter">Category</label>
+                        <select id="categoryFilter" name="category">
+                            <option value="">All Categories</option>
+                            <option value="tops">Tops</option>
+                            <option value="bottoms">Bottoms</option>
+                            <option value="shoes">Shoes</option>
+                            <option value="accessories">Accessories</option>
+                            <option value="outerwear">Outerwear</option>
+                        </select>
+                    </div>
+                    <div class="flex-column submission-box">
+                        <label for="locationFilter">Location</label>
+                        <select id="locationFilter" name="location">
+                            <option value="">All Locations</option>
+                            <option value="closet">Closet</option>
+                            <option value="drawer">Drawer</option>
+                            <option value="laundry">Laundry</option>
+                            <option value="storage">Storage</option>
+                        </select>
+                    </div>
+                    <div class="flex-column submission-box" style="align-self: flex-end;">
+                        <button type="submit" style="margin-top: 1.5rem;">Filter Items</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Add New Item Section -->
+        <section class="main-section flex-container">
+            <div class="flex-column subsection" style="width: 100%;">
+                <h2 class="header">Add New Clothing Item</h2>
+                <form class="flex-container" style="flex-wrap: wrap; gap: 1rem;">
+                    <div class="flex-column submission-box" style="flex: 1 1 200px;">
+                        <label for="itemName">Item Name</label>
+                        <input type="text" id="itemName" name="itemName" required>
+                    </div>
+                    <div class="flex-column submission-box" style="flex: 1 1 200px;">
+                        <label for="itemCategory">Category</label>
+                        <select id="itemCategory" name="itemCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="tops">Tops</option>
+                            <option value="bottoms">Bottoms</option>
+                            <option value="shoes">Shoes</option>
+                            <option value="accessories">Accessories</option>
+                            <option value="outerwear">Outerwear</option>
+                        </select>
+                    </div>
+                    <div class="flex-column submission-box" style="flex: 1 1 200px;">
+                        <label for="itemLocation">Storage Location</label>
+                        <select id="itemLocation" name="itemLocation" required>
+                            <option value="">Select Location</option>
+                            <option value="closet">Closet</option>
+                            <option value="drawer">Drawer</option>
+                            <option value="laundry">Laundry</option>
+                            <option value="storage">Storage</option>
+                        </select>
+                    </div>
+                    <div class="flex-column submission-box" style="flex: 1 1 200px;">
+                        <label for="itemColor">Color</label>
+                        <input type="text" id="itemColor" name="itemColor">
+                    </div>
+                    <div class="flex-column submission-box" style="flex: 1 1 200px;">
+                        <label for="itemSize">Size</label>
+                        <input type="text" id="itemSize" name="itemSize">
+                    </div>
+                    <div class="flex-column submission-box" style="width: 100%;">
+                        <button type="submit">Add to Inventory</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+                    
+        <!-- Empty Inventory Display Section -->
+        <section class="main-section">
+            <div class="subsection">
+                <h2 class="header">Your Clothing Items</h2>
+                <div class="flex-container" style="gap: 2rem; justify-content: flex-start;">
+                    <div class="empty-inventory flex-column">
+                    <h3 class="empty-message">Your inventory is empty</h3>
+                    <p class="empty-submessage">Add your first clothing item using the form above to get started!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section class="main-section flex-container">
+            <div class="flex-column subsection" style="text-align: center;">
+                <h2 class="header">Inventory Summary</h2>
+                <div class="flex-container">
+                    <div class="flex-column subsection">
+                        <p class="subheading">0</p>
+                        <p>Total Items</p>
+                    </div>
+                    <div class="flex-column subsection">
+                        <p class="subheading">0</p>
+                        <p>In Closet</p>
+                    </div>
+                    <div class="flex-column subsection">
+                        <p class="subheading">0</p>
+                        <p>In Storage</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="flex-container footer">
+            <p>Copyright © 2025</p>
+            <p><a href="mailto:email@shirt.uw.edu">email@shirt.uw.edu</a></p>
+            <p><a href="tel:111-222-3333">111-222-3333</a></p>
+        </div>
+    </footer>
+</body>
+</html>
