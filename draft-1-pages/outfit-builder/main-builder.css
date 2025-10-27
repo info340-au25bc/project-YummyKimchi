@@ -244,28 +244,25 @@ h1 {
 
 .closet-col nav.categories {
 	position: static;
-	/* not fixed */
 	background: transparent;
 	display: block;
-	/* not flex */
 }
 
-/* Make the categories list vertical again */
 .categories ul {
-  display: block;      /* default block flow */
+  display: block;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .categories li {
-  display: block;      /* override the global nav li inline-flex */
+  display: block; 
   margin: 6px 0;
 }
 
 .categories a {
-  display: block;      /* clickable full row */
-  padding: 8px 10px;   /* smaller than the top nav */
+  display: block;
+  padding: 8px 10px;  
   border-radius: 8px;
   color: #1f1f1f;
   text-decoration: none;
