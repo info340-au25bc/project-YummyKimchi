@@ -33,6 +33,7 @@ nav a {
 a {
     color: white;
     text-decoration: none;
+    display: inline-flex;
 }
 
 /* While hovering over links on navbar, background color changes */
