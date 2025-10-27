@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="author" content="Luke, Andrew, Hieu">
+		<meta name="description" content="A website for tracking clothing and clothing combinations">
+		<title>Wardrobe App</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+		<link rel="stylesheet" href="main-builder.css">
+		<link rel="stylesheet" href="../../css/style.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Encode+Sans:wdth,wght@125,900&display=swap" rel="stylesheet">
+		<link href='https://fonts.googleapis.com/css?family=Encode Sans' rel='stylesheet'>
+		<link rel="icon" type="image/png" href="../../img/shirt-icon.png">
+	</head>
+	<!-- Body -->
+	<body>
+		<!-- Nav Bar and Header -->
+		<header>
+			<nav>
+				<div class="app-home"><a href="">HOME</a></div>
+				<div class="more-menu"><a href=""><img src="../../img/menu.png" class="menu-pic"></a></div>
+				<div class="app-links">
+					<ul>
+						<li><a href="">INVENTORY</a></li>
+						<li><a href="">OUTFIT BUILDER</a></li>
+						<li><a href="">ACCOUNT</a></li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+		<div class="app">
+			<section class="builder-col" aria-labelledby="builder-title">
+				<div class="builder-grid">
+					<div class="layer-stack" aria-label="Outfit layers">
+						<div class="layer-row">
+							<div class="control-col">
+								<button class="icon-btn">🔁</button>
+								<button class="icon-btn delete">🗑</button>
+							</div>
+							<div class="slot">
+								<div class="add-hint">+ add hat</div>
+							</div>
+						</div>
+						<div class="layer-row">
+							<div class="control-col">
+								<button class="icon-btn">🔁</button>
+								<button class="icon-btn delete">🗑</button>
+							</div>
+							<div class="slot">
+								<div class="add-hint">+ add top</div>
+							</div>
+						</div>
+						<div class="layer-row">
+							<div class="control-col">
+								<button class="icon-btn">🔁</button>
+								<button class="icon-btn delete">🗑</button>
+							</div>
+							<div class="slot">
+								<div class="add-hint">+ add bottoms</div>
+							</div>
+						</div>
+						<div class="layer-row">
+							<div class="control-col">
+								<button class="icon-btn">🔁</button>
+								<button class="icon-btn delete">🗑</button>
+							</div>
+							<div class="slot">
+								<div class="add-hint">+ add shoes</div>
+							</div>
+						</div>
+					</div>
+					<div class="forecast-panel">
+						<p class="forecast-title">Today’s Forecast</p>
+						<div class="forecast-box">Forecast widget placeholder</div>
+						<button class="gen-btn">
+						<span class="gen-icon">🌤✨</span> Generate Outfit
+						</button>
+					</div>
+				</div>
+				<div class="actions">
+					<button class="btn clear">Clear</button>
+					<button class="btn save">Save Outfit</button>
+				</div>
+			</section>
+			<div class="closet-col">
+				<div class="catalog-header">
+					<button class="add-item">+ add item</button>
+					<div class="search-row">
+						<div class="chip">🔎︎</div>
+						<div class="chip">↕</div>
+						<div class="search"><input type="search" placeholder="Search…"><span class="glass">🔍</span></div>
+						<div class="chip">⋯</div>
+					</div>
+				</div>
+				<div class="catalog"></div>
+				<nav class="categories">
+					<h4>Categories</h4>
+					<ul>
+						<li><a class="active" href="#">All</a></li>
+						<li><a href="#">T‑Shirts</a></li>
+						<li><a href="#">Shirts</a></li>
+						<li><a href="#">Hoodies</a></li>
+						<li><a href="#">Sweatshirts</a></li>
+						<li><a href="#">Jeans</a></li>
+						<li><a href="#">Pants</a></li>
+						<li><a href="#">Trousers</a></li>
+						<li><a href="#">Sweaters</a></li>
+						<li><a href="#">Coats & Jackets</a></li>
+						<li><a href="#">Hats</a></li>
+						<li><a href="#">Jewelry</a></li>
+						<li><a href="#">Bags</a></li>
+						<li><a href="#">Sunglasses</a></li>
+						<li><a href="#">Shoes</a></li>
+					</ul>
+				</nav>
+				<section class="gallery">
+					<div class="clothing"></div>
+					<div class="clothing"></div>
+					<div class="clothing"></div>
+					<div class="clothing"></div>
+					<div class="clothing"></div>
+					<div class="clothing"></div>
+					<div class="clothing"></div>
+					<div class="clothing"></div>
+					<div class="clothing"></div>
+				</section>
+            </div>
+		</div>
+	</body>
+</html>
