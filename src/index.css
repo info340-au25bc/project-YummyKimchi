@@ -190,7 +190,7 @@ header {
 /* Foot stylizations */
 .footer {
     font-size: 1rem;
-    position: relative;
+    position: absolute;
     background-color: #252525;
     justify-content: space-around;
     bottom: 0;
@@ -204,6 +204,7 @@ header {
     width: 40%;
     margin: auto;
     margin-top: 10rem;
+    margin-bottom: 10rem;
 }
 
 /* Stylization for a elements that are in class login-box element */

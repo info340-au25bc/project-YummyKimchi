@@ -1,6 +1,7 @@
 import React from 'react';
 import { FrontPage } from './FrontPage';
 import { Routes, Route, Navigate, Link } from 'react-router';
+import { LoginPage } from './LoginPage';
 
 function App(props) {
     return (
@@ -8,21 +9,25 @@ function App(props) {
         <div>
             <header>
                 <nav>
-                    <div className="app-home"><a href="#">HOME</a></div>
+                    <div className="app-home"><Link to='/home'>HOME</Link></div>
                     <div className="more-menu"><a href="#"><img src="/img/menu.png" className="menu-pic" /></a></div>
                     <div className="app-links">
                         <ul>
                             <li><a href="#">INVENTORY</a></li>
                             <li><a href="#">OUTFIT BUILDER</a></li>
-                            <li><a href="#">ACCOUNT</a></li>
+                            <li><Link to='/login'>ACCOUNT</Link></li>
                         </ul>
                     </div>
                 </nav>
             </header>
             <main>
                 <Routes>
+                    {/* Home Page Routing */}
                     <Route path='home' element={<FrontPage />} />
                     <Route path='*' element={<Navigate to='/home' />} />
+
+                    {/* Login Page Routing */}
+                    <Route path='login' element={<LoginPage />} />
                 </Routes>
             </main>
             <footer>
