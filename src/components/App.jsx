@@ -1,12 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FrontPage } from './FrontPage';
 import { Routes, Route, Navigate, Link } from 'react-router';
-import { LoginPage } from './LoginPage';
+import { Login } from './Login';
+import { SignUp } from './SignUp';
+import { LoggedIn } from './LoggedIn';
+ 
+import logins from '../data/logins.json';
 
 function App(props) {
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    const handleLogIn = (event) => {
+        // if the user is logged in and this function is passed, it will be set to false as it will have been sent in the sign out.
+        // If the user is false and this function is called, it will be set to true as verification in the login.jsx will have passed.
+        if (loggedIn) {
+            setLoggedIn(false);
+        } else {
+            setLoggedIn(true);
+        }
+    }
+
     return (
         // Nav Bar and Header
-        <div>
+        <div className='grid'>
             <header>
                 <nav>
                     <div className="app-home"><Link to='/home'>HOME</Link></div>
@@ -15,7 +31,7 @@ function App(props) {
                         <ul>
                             <li><a href="#">INVENTORY</a></li>
                             <li><a href="#">OUTFIT BUILDER</a></li>
-                            <li><Link to='/login'>ACCOUNT</Link></li>
+                            <li><Link to='/loggedIn'>ACCOUNT</Link></li>
                         </ul>
                     </div>
                 </nav>
@@ -27,7 +43,9 @@ function App(props) {
                     <Route path='*' element={<Navigate to='/home' />} />
 
                     {/* Login Page Routing */}
-                    <Route path='login' element={<LoginPage />} />
+                    <Route path='login' element={loggedIn ? <Navigate to='/loggedIn'/> : <Login logins={logins} buttonReact={handleLogIn} />} />
+                    <Route path='signUp' element={<SignUp />} />
+                    <Route path='loggedIn' element={loggedIn ? <LoggedIn buttonReact={handleLogIn} /> : <Navigate to='/login' />} />
                 </Routes>
             </main>
             <footer>
