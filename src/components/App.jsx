@@ -26,14 +26,16 @@ function App(props) {
             <header>
                 <nav>
                     <div className="app-home"><Link to='/home'>HOME</Link></div>
-                    <div className="more-menu"><a href="#"><img src="/img/menu.png" className="menu-pic" /></a></div>
-                    <div className="app-links">
-                        <ul>
-                            <li><a href="#">INVENTORY</a></li>
-                            <li><a href="#">OUTFIT BUILDER</a></li>
-                            <li><Link to='/loggedIn'>ACCOUNT</Link></li>
-                        </ul>
+                    <div className="more-menu">
+                        <img src="/img/inventory.png" className="menu-pic" />
+                        <img src="/img/outfit-builder.png" className="menu-pic" />
+                        <Link to='/loggedIn'><img src="/img/account.png" className="menu-pic" /></Link>
                     </div>
+                    <ul className="app-links">
+                        <li><a href="#">INVENTORY</a></li>
+                        <li><a href="#">OUTFIT BUILDER</a></li>
+                        <li><Link to='/loggedIn'>ACCOUNT</Link></li>
+                    </ul>
                 </nav>
             </header>
             <main>

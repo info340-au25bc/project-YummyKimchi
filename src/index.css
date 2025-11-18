@@ -5,13 +5,16 @@ body {
     color: white;
     font-size: 1.5rem;
     margin:0;
-    display: flex;
-    flex-direction: column;
-    
 }
 
 body, html {
     overflow-x: hidden;
+}
+
+div.grid {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 main {
@@ -94,6 +97,8 @@ div.app-home a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+    outline: 2px solid black;
+    outline-offset: -2px;
 }
 
 /* Nav Bar menu icon alternate hover color */
@@ -202,7 +207,7 @@ header {
     justify-content: space-around;
     bottom: 0;
     width: 100%;
-    margin-top: 0;
+    margin-top: auto;
 }
 
 /* Stylization for form */
