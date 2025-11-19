@@ -3,8 +3,8 @@ import React from "react"
 export function FrontPage() {
     return (
         <div>
-            <div className="header-textbox">
-                <div className="textbox-width">
+            <div className="header-textbox" aria-label="The main header containing the background image of a bunch of clothes and the header text.">
+                <div className="textbox-width" aria-label="The textbox of the header describing the site.">
                     <h1 className="header">The App to Manage your Wardrobe</h1>
                     <p className="header-paragraph">Keep Track. Build Oufits. Save.</p>
                 </div>
