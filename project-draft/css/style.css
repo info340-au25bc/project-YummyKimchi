@@ -21,6 +21,8 @@ nav {
     display: flex;
     margin: 0;
     justify-content: space-between;
+    height: 69px;
+    z-index: 2000;
 }
 
 /* Colors links in nav white, removes hyperlink underline, and removes margin */
