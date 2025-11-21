@@ -17,6 +17,7 @@ body {
 	margin: 0;
 	font-family: 'Inter', sans-serif;
 	color: black;
+
 }
 
 .app {
@@ -246,6 +247,7 @@ h1 {
 	position: static;
 	background: transparent;
 	display: block;
+	z-index: 1000;
 }
 
 .categories ul {
