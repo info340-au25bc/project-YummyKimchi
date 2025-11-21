@@ -4,6 +4,7 @@ import { Routes, Route, Navigate, Link } from 'react-router';
 import { Login } from './Login';
 import { SignUp } from './SignUp';
 import { LoggedIn } from './LoggedIn';
+import { InventoryPage } from './InventoryPage';
  
 import logins from '../data/logins.json';
 
@@ -27,12 +28,12 @@ function App(props) {
                 <nav>
                     <div className="app-home"><Link to='/home'>HOME</Link></div>
                     <div className="more-menu">
-                        <img src="/img/inventory.png" className="menu-pic" />
+                        <Link to='/inventory'><img src="/img/inventory.png" className="menu-pic" /></Link>
                         <img src="/img/outfit-builder.png" className="menu-pic" />
                         <Link to='/loggedIn'><img src="/img/account.png" className="menu-pic" /></Link>
                     </div>
                     <ul className="app-links">
-                        <li><a href="#">INVENTORY</a></li>
+                        <li><Link to='/inventory'>INVENTORY</Link></li>
                         <li><a href="#">OUTFIT BUILDER</a></li>
                         <li><Link to='/loggedIn'>ACCOUNT</Link></li>
                     </ul>
@@ -48,6 +49,9 @@ function App(props) {
                     <Route path='login' element={loggedIn ? <Navigate to='/loggedIn'/> : <Login logins={logins} buttonReact={handleLogIn} />} />
                     <Route path='signUp' element={<SignUp />} />
                     <Route path='loggedIn' element={loggedIn ? <LoggedIn buttonReact={handleLogIn} /> : <Navigate to='/login' />} />
+
+                    {/* Inventory Page Routing */}
+                    <Route path='inventory' element={<InventoryPage />} />
                 </Routes>
             </main>
             <footer>
