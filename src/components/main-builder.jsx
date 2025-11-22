@@ -3,13 +3,11 @@ import { clothes } from '../data/clothes.js'
 
 export function OutfitBuilderPage(){
 
-    const toWear = ['hat', 'shirt', 'pants', 'shoes'];
+    const layerSlots = ['hat', 'top', 'bottoms', 'shoes'];
 
-    const outfitBuilderPage = () => {
-        const [items] = useState = {clothes};
-        const [slots, setSlots] = useState({
-        hat: null, shirt: null, pants: null, shoes: null})
-    };
+    const items = clothes;
+
+    const [slots, setSlots] = useState({hat: null, top: null, bottoms: null, shoes: null})
 
     const handleClear = () => {
         setSlots({hat: null, top: null, bottoms: null, shoes: null});
