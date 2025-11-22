@@ -141,7 +141,7 @@ export function InventoryPage(props) {
                 </div>
             </section>
             
-            {/* Empty Inventory Display Section */}
+            {/* Inventory Display Section */}
             <section className="main-section">
                 <div className="subsection">
                     <h2 className="header">Your Clothing Items</h2>
