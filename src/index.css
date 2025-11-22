@@ -361,23 +361,92 @@ header {
     width: 100%;
 }
 
-/* Inventory grid and cards */
+/* Inventory grid and cards - UPDATED WITH FIXED CONTENT CONTAINMENT */
 .inventory-grid {
-    gap: 2rem;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    justify-items: center;
+}
+
+/* Make sure the flex container works well with the grid */
+.flex-container.inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    justify-items: center;
 }
 
 .clothing-card {
     background-color: #3a2c2c;
     padding: 1.5rem;
     border-radius: 8px;
+    max-width: 300px;
     min-width: 250px;
-    flex: 1 1 250px;
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.clothing-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0; /* Prevent image from shrinking */
 }
 
 .clothing-card-heading {
-    margin-top: 1rem;
+    margin: 1rem 0 0.5rem 0;
+    text-align: center;
+    font-family: 'Encode Sans Condensed', 'Encode Sans', sans-serif;
+    font-weight: 900;
+    font-size: 1.3rem;
+    color: white;
+    line-height: 1.2;
+    word-wrap: break-word; /* Ensure long text wraps */
+}
+
+/* Add specific styling for the clothing card content */
+.clothing-card p {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+    line-height: 1.3;
+    word-wrap: break-word;
+    color: #e0e0e0;
+}
+
+.clothing-card strong {
+    color: white;
+    font-weight: 700;
+}
+
+.clothing-card .submission-box {
+    margin-top: auto; /* Push button to bottom */
+    padding-top: 1rem;
+}
+
+.clothing-card .submission-box button {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    background-color: #5f2929;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.clothing-card .submission-box button:hover {
+    background-color: #852a2a;
+}
+
+/* Ensure all content fits within the card */
+.clothing-card > * {
+    max-width: 100%;
 }
 
 .clothing-image {
@@ -443,6 +512,7 @@ header {
     border-radius: 8px;
     margin: 2rem 0;
     flex-wrap: wrap;
+    grid-column: 1 / -1;
 }
 
 .empty-image {
@@ -472,11 +542,63 @@ header {
     margin-top: 1.5rem;
 }
 
+/* Current filters display */
+.current-filters {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #3a2c2c;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+/* Responsive adjustments for clothing cards */
+@media (max-width: 768px) {
+    .inventory-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+    }
+    
+    .clothing-card {
+        min-width: 200px;
+        max-width: 100%;
+        padding: 1rem;
+    }
+    
+    .clothing-card-heading {
+        font-size: 1.2rem;
+    }
+    
+    .clothing-card p {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .inventory-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .clothing-card {
+        min-width: unset;
+        max-width: 100%;
+        padding: 1rem;
+    }
+    
+    .clothing-card-heading {
+        font-size: 1.1rem;
+    }
+    
+    .clothing-card p {
+        font-size: 0.8rem;
+    }
+}
+
 /* Media queries for tracker page */
 @media (min-width: 0px) {
     .clothing-card {
         min-width: 100%;
-        flex: 1 1 100%;
+        max-width: 100%;
     }
     
     .clothing-name {
@@ -518,7 +640,7 @@ header {
 @media (min-width: 500px) {
     .clothing-card {
         min-width: calc(50% - 1rem);
-        flex: 1 1 calc(50% - 1rem);
+        max-width: 300px;
     }
     
     .clothing-name {
@@ -551,7 +673,7 @@ header {
 
     .clothing-card {
         min-width: calc(33.333% - 1.5rem);
-        flex: 1 1 calc(33.333% - 1.5rem);
+        max-width: 300px;
     }
     
     .clothing-name {
@@ -579,7 +701,7 @@ header {
 @media (min-width: 1000px) {
     .clothing-card {
         min-width: calc(25% - 2rem);
-        flex: 1 1 calc(25% - 2rem);
+        max-width: 300px;
     }
     
     .clothing-name {
