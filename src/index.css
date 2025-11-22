@@ -126,7 +126,7 @@ header {
     color:white; 
 }
 
-/* Start of test classes */
+/* Start of top image and text classes */
 
 .header-stack {
     display: grid;
@@ -161,8 +161,7 @@ header {
     z-index: -1;
 }
 
-
-/* End of test classes */
+/* Image classes */
 
 /* Class that formats paragraphs in the header */
 .header-paragraph {
