@@ -9,7 +9,7 @@ import { OutfitBuilderPage } from './main-builder';
  
 import logins from '../data/logins.json';
 import clothes from '../data/exampleClothing.json';
-import clothes2 from '../data/clothes.json';
+import clothes2 from '../data/clothes2.json';
 
 function App(props) {
     const [loggedIn, setLoggedIn] = useState(false);
