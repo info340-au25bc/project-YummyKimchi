@@ -1,0 +1,5 @@
+[{"description":"White Casual Shirt", "category":"Tops","location":"Closet", "color":"White", "size":"Large", "file":"/img/white-shirt.webp"},
+{"description":"Blue Denim Jeans", "category":"Bottoms","location":"Drawer", "color":"Blue", "size":"32x32", "file":"/img/blue-jeans.avif"},
+{"description":"Running Shoes", "category":"Shoes","location":"Closet", "color":"White", "size":"10", "file":"/img/running-shoes.webp"},
+{"description":"Winter Jacket", "category":"Outerwear","location":"Storage", "color":"Navy Blue", "size":"Large", "file":"/img/winter-jacket.jpg"}
+]

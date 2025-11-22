@@ -7,6 +7,7 @@ import { LoggedIn } from './LoggedIn';
 import { InventoryPage } from './InventoryPage';
  
 import logins from '../data/logins.json';
+import clothes from '../data/exampleClothing.json';
 
 function App(props) {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -51,7 +52,7 @@ function App(props) {
                     <Route path='loggedIn' element={loggedIn ? <LoggedIn buttonReact={handleLogIn} /> : <Navigate to='/login' />} />
 
                     {/* Inventory Page Routing */}
-                    <Route path='inventory' element={<InventoryPage />} />
+                    <Route path='inventory' element={<InventoryPage clothingList={clothes} />} />
                 </Routes>
             </main>
             <footer>
