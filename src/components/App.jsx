@@ -4,7 +4,11 @@ import { Routes, Route, Navigate, Link } from 'react-router';
 import { Login } from './Login';
 import { SignUp } from './SignUp';
 import { LoggedIn } from './LoggedIn';
+<<<<<<< Updated upstream
 import { InventoryPage } from './InventoryPage';
+=======
+import { OutfitBuilderPage } from './main-builder';
+>>>>>>> Stashed changes
  
 import logins from '../data/logins.json';
 import clothes from '../data/exampleClothing.json';
