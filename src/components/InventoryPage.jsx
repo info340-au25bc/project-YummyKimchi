@@ -8,39 +8,51 @@ export function InventoryPage(props) {
     // Grabs the data from props
     const clothingList = props.clothingList;
 
-    // Filter clothing item
+    // Debug: log the clothing list to see what data we're working with
+    console.log('Clothing list:', clothingList);
+
+    // Filter clothing items - this runs automatically when state changes
     const filteredClothingList = clothingList.filter((item) => {
-        const matchesSearch = searchTerm === "" || 
-            item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item.color.toLowerCase().includes(searchTerm.toLowerCase());
+        console.log('Checking item:', item);
         
-        const matchesCategory = categoryFilter === "" || item.category === categoryFilter;
-        const matchesLocation = locationFilter === "" || item.location === locationFilter;
+        const matchesSearch = searchTerm === "" || 
+            (item.description && item.description.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (item.color && item.color.toLowerCase().includes(searchTerm.toLowerCase()));
+        
+        const matchesCategory = categoryFilter === "" || 
+            (item.category && item.category.toLowerCase() === categoryFilter.toLowerCase());
+        
+        const matchesLocation = locationFilter === "" || 
+            (item.location && item.location.toLowerCase() === locationFilter.toLowerCase());
+        
+        console.log('Matches:', { matchesSearch, matchesCategory, matchesLocation, item });
         
         return matchesSearch && matchesCategory && matchesLocation;
     });
+
+    console.log('Filtered list:', filteredClothingList);
     
     // This is the list that will display all of the clothing cards.
     let returnList = [];
 
-    // This will just check in the beginning if there is literally no items to be displayed, otherwise just fill the returnList with information.
-    if (clothingList.length === 0) {
+    if (filteredClothingList.length === 0) {
         returnList.push(
-            <div className="empty-inventory flex-column">
-                <h3 className="empty-message">Your inventory is empty</h3>
-                <p className="empty-submessage">Add your first clothing item using the form above to get started!</p>
+            <div className="empty-inventory flex-column" key="empty">
+                <h3 className="empty-message">No items match your filters</h3>
+                <p className="empty-submessage">Try adjusting your search or filter criteria</p>
+                <p className="empty-submessage">Total items in inventory: {clothingList.length}</p>
             </div>
         )
     } else {
-        returnList = clothingList.map((object) => {
+        returnList = filteredClothingList.map((object, index) => {
             return (
-                <div className="flex-column subsection clothing-card" key={object.description}>
-                    <img src={object.file} className="clothing-card" />
+                <div className="flex-column subsection clothing-card" key={object.id || object.description + index}>
+                    <img src={object.file} className="clothing-card" alt={object.description} />
                     <h3 className="subheading clothing-card-heading">{object.description}</h3>
-                    <p><strong>Category:</strong>{object.category}</p>
-                    <p><strong>Location:</strong>{object.location}</p>
-                    <p><strong>Color:</strong>{object.color}</p>
-                    <p><strong>Size:</strong>{object.size}</p>
+                    <p><strong>Category:</strong> {object.category}</p>
+                    <p><strong>Location:</strong> {object.location}</p>
+                    <p><strong>Color:</strong> {object.color}</p>
+                    <p><strong>Size:</strong> {object.size}</p>
                     <div className="submission-box">
                         <button>Edit Item</button>
                     </div>
@@ -49,16 +61,10 @@ export function InventoryPage(props) {
         })
     }
 
-    // Item statistic
+    // Item statistics
     const totalItems = filteredClothingList.length;
-    const inCloset = filteredClothingList.filter(item => item.location === 'closet').length;
-    const inStorage = filteredClothingList.filter(item => item.location === 'storage').length;
-
-    // Filtering submission
-    const handleFilterSubmit = (event) => {
-        event.preventDefault();
-
-    };
+    const inCloset = filteredClothingList.filter(item => item.location && item.location.toLowerCase() === 'closet').length;
+    const inStorage = filteredClothingList.filter(item => item.location && item.location.toLowerCase() === 'storage').length;
 
     // Handle search input change
     const handleSearchChange = (event) => {
@@ -73,6 +79,13 @@ export function InventoryPage(props) {
     // Handle location filter change
     const handleLocationChange = (event) => {
         setLocationFilter(event.target.value);
+    };
+
+    // Clear all filters
+    const handleClearFilters = () => {
+        setSearchTerm("");
+        setCategoryFilter("");
+        setLocationFilter("");
     };
 
     // Handle adding new item (placeholder function)
@@ -96,14 +109,26 @@ export function InventoryPage(props) {
             <section className="main-section flex-container">
                 <div className="flex-column subsection full-width">
                     <h2 className="header">Find Your Items</h2>
-                    <form className="flex-container filter-form" onSubmit={handleFilterSubmit}>
+                    <div className="flex-container filter-form">
                         <div className="flex-column submission-box">
                             <label htmlFor="searchInput">Search Items</label>
-                            <input type="text" id="searchInput" name="search" placeholder="Enter item name..." onChange={handleSearchChange}/>
+                            <input 
+                                type="text" 
+                                id="searchInput" 
+                                name="search" 
+                                placeholder="Enter item name or color..." 
+                                value={searchTerm}
+                                onChange={handleSearchChange}
+                            />
                         </div>
                         <div className="flex-column submission-box">
                             <label htmlFor="categoryFilter">Category</label>
-                            <select id="categoryFilter" name="category" onchange={handleCategoryChange}>
+                            <select 
+                                id="categoryFilter" 
+                                name="category" 
+                                value={categoryFilter}
+                                onChange={handleCategoryChange}
+                            >
                                 <option value="">All Categories</option>
                                 <option value="tops">Tops</option>
                                 <option value="bottoms">Bottoms</option>
@@ -114,7 +139,12 @@ export function InventoryPage(props) {
                         </div>
                         <div className="flex-column submission-box">
                             <label htmlFor="locationFilter">Location</label>
-                            <select id="locationFilter" name="location" onChange={handleLocationChange}>
+                            <select 
+                                id="locationFilter" 
+                                name="location" 
+                                value={locationFilter}
+                                onChange={handleLocationChange}
+                            >
                                 <option value="">All Locations</option>
                                 <option value="closet">Closet</option>
                                 <option value="drawer">Drawer</option>
@@ -123,12 +153,21 @@ export function InventoryPage(props) {
                             </select>
                         </div>
                         <div className="flex-column submission-box filter-button">
-                            <button type="submit inventory-button-styling">Filter Items</button>
+                            <button type="button" onClick={handleClearFilters}>Clear Filters</button>
                         </div>
-                    </form>
+                    </div>
+                    <div className="current-filters">
+                        <p>Active filters: 
+                            {searchTerm && ` Search: "${searchTerm}"`}
+                            {categoryFilter && ` Category: ${categoryFilter}`}
+                            {locationFilter && ` Location: ${locationFilter}`}
+                            {!searchTerm && !categoryFilter && !locationFilter && ' None'}
+                        </p>
+                    </div>
                 </div>
             </section>
-            {/* Add New Item Section */}
+
+            {/* Rest of your component remains the same */}
             <section className="main-section flex-container">
                 <div className="flex-column subsection full-width">
                     <h2 className="header">Add New Clothing Item</h2>
@@ -173,7 +212,6 @@ export function InventoryPage(props) {
                 </div>
             </section>
             
-            {/* Inventory Display Section */}
             <section className="main-section">
                 <div className="subsection">
                     <h2 className="header">Your Clothing Items ({filteredClothingList.length})</h2>
@@ -183,7 +221,6 @@ export function InventoryPage(props) {
                 </div>
             </section>
             
-            {/* Statistics Section */}
             <section className="main-section flex-container">
                 <div className="flex-column subsection stats-section">
                     <h2 className="header">Inventory Summary</h2>
