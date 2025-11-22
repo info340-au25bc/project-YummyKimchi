@@ -54,8 +54,9 @@ export function InventoryPage(props) {
     return (
         <div>
             {/* Top image and Title */}
-            <div className="header-textbox">
-                <div className="textbox-width">
+            <div className="header-stack">
+                <img src="/public/img/main-page-header.avif" alt="Background image of clothes" className="header-img"/>
+                <div className="header-text">
                     <h1 className="header">Your Clothing Inventory</h1>
                     <p className="header-paragraph">Track, organize, and manage your wardrobe</p>
                 </div>

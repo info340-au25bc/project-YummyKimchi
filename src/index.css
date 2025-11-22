@@ -32,6 +32,7 @@ nav {
     display: flex;
     margin: 0;
     justify-content: space-between;
+    z-index: 1;
 }
 
 /* Colors links in nav white, removes hyperlink underline, and removes margin */
@@ -125,21 +126,43 @@ header {
     color:white; 
 }
 
-/* div that holds the flex boxes in the header */
-.header-textbox {
-    display: flex;
-    flex-direction: column;
-    padding: 5rem;;
-    background-image: 
-        linear-gradient(to right, rgba(0, 0, 0, 1), transparent),
-        url(/public/img/main-page-header.avif);
+/* Start of test classes */
+
+.header-stack {
+    display: grid;
+    width: 100%;
     margin-bottom: 5rem;
 }
 
-/* Adjusts size of textbox */
-.textbox-width {
-    width: 40%;
+/* Both image and text occupy the same grid cell */
+.header-img {
+    grid-area: 1 / 1;
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    z-index: -2;
 }
+
+/* Text overlays the image using natural stacking, NOT absolute positioning */
+.header-text {
+    grid-area: 1 / 1;
+    align-self: center;
+    padding-left: 5rem;
+    color: white;
+    width: 40%;
+    z-index: 0;
+}
+
+/* Gradient using grid layering */
+.header-stack::before {
+    content: "";
+    grid-area: 1 / 1;
+    background: linear-gradient(to right, rgba(0, 0, 0, 1), transparent);
+    z-index: -1;
+}
+
+
+/* End of test classes */
 
 /* Class that formats paragraphs in the header */
 .header-paragraph {
