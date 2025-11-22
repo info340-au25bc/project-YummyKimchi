@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FrontPage } from './FrontPage';
-import { Routes, Route, Navigate, Link } from 'react-router-dom';
+import { Routes, Route, Navigate, Link } from 'react-router';
 import { Login } from './Login';
 import { SignUp } from './SignUp';
 import { LoggedIn } from './LoggedIn';
@@ -9,7 +9,7 @@ import { OutfitBuilderPage } from './main-builder';
  
 import logins from '../data/logins.json';
 import clothes from '../data/exampleClothing.json';
-import clothes2 from '../data/clothes.js';
+import clothes2 from '../data/clothes.json';
 
 function App(props) {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -56,7 +56,7 @@ function App(props) {
                     {/* Inventory Page Routing */}
                     <Route path='inventory' element={<InventoryPage clothingList={clothes} />} />
 
-                    <Route path= 'main-builder' element={<OutfitBuilderPage clothingList ={clothes2} /> }/>
+                    <Route path= 'main-builder' element={<OutfitBuilderPage clothingList={clothes2} /> }/>
                 </Routes>
             </main>
             <footer>

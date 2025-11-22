@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
-import { clothes } from '../data/clothes.js'
 
-export function OutfitBuilderPage(){
+export function OutfitBuilderPage(props){
 
     const layerSlots = ['hat', 'top', 'bottoms', 'shoes'];
 
-    const items = clothes;
+    const items = props.clothingList;
 
     const [slots, setSlots] = useState({hat: null, top: null, bottoms: null, shoes: null})
 
