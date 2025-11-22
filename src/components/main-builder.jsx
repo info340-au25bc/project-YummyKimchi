@@ -16,7 +16,7 @@ export function OutfitBuilderPage(){
     const assignRandomItem = (layer) => {
         const itemFilter = items.filter((item) => item.slot === layer)
         if (itemFilter.length === 0) return null;
-        const index = Math.floor(Math.random() * candidates.length);
+        const index = Math.floor(Math.random() * itemFilter.length);
         return itemFilter[index];
     };
 
