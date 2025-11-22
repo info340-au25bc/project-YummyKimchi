@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import { FrontPage } from './FrontPage';
-import { Routes, Route, Navigate, Link } from 'react-router';
+import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import { Login } from './Login';
 import { SignUp } from './SignUp';
 import { LoggedIn } from './LoggedIn';
-<<<<<<< Updated upstream
 import { InventoryPage } from './InventoryPage';
-=======
 import { OutfitBuilderPage } from './main-builder';
->>>>>>> Stashed changes
  
 import logins from '../data/logins.json';
 import clothes from '../data/exampleClothing.json';
+import clothes2 from '../data/clothes.js';
 
 function App(props) {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -34,12 +32,12 @@ function App(props) {
                     <div className="app-home"><Link to='/home'>HOME</Link></div>
                     <div className="more-menu">
                         <Link to='/inventory'><img src="/img/inventory.png" className="menu-pic" /></Link>
-                        <img src="/img/outfit-builder.png" className="menu-pic" />
+                        <Link to = '/main-builder'> <img src="/img/outfit-builder.png" className="menu-pic" /> </Link>
                         <Link to='/loggedIn'><img src="/img/account.png" className="menu-pic" /></Link>
                     </div>
                     <ul className="app-links">
                         <li><Link to='/inventory'>INVENTORY</Link></li>
-                        <li><a href="#">OUTFIT BUILDER</a></li>
+                        <li><Link to ='/main-builder'>OUTFIT BUILDER</Link></li>
                         <li><Link to='/loggedIn'>ACCOUNT</Link></li>
                     </ul>
                 </nav>
@@ -57,6 +55,8 @@ function App(props) {
 
                     {/* Inventory Page Routing */}
                     <Route path='inventory' element={<InventoryPage clothingList={clothes} />} />
+
+                    <Route path= 'main-builder' element={<OutfitBuilderPage clothingList ={clothes2} /> }/>
                 </Routes>
             </main>
             <footer>
@@ -68,6 +68,6 @@ function App(props) {
             </footer>
         </div>
     )
-}
+};
 
 export default App;
