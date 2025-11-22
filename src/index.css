@@ -712,3 +712,339 @@ header {
         font-size: 2.5rem;
     }
 }
+
+/* Builder page starts here*/
+:root {
+    --bg: #d9d0c3;
+    --panel: #ece8e1;
+    --ink: #171717;
+    --muted: #6b6b6b;
+    --accent: #3b6cf0;
+    --good: #2f8f2f;
+    --danger: #b51f1f;
+    --chip: #e6e1d5;
+    --border: #cfc8bb;
+}
+
+.app {
+    display: grid;
+    grid-template-columns: 1fr 600px;
+    min-height: 100vh;
+    background-color: var(--bg);
+    color: black; 
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    text-align: left;
+}
+
+.builder-col {
+    position: relative;
+    padding: 16px 20px 88px;
+}
+
+.app h1 {
+    font-size: 32px;
+    margin: 8px 0 16px;
+    color: black;
+}
+
+.builder-grid {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 28px;
+    align-items: start;
+}
+
+.layer-stack {
+    display: grid;
+    gap: 16px;
+}
+
+.layer-row {
+    display: grid;
+    grid-template-columns: 36px minmax(160px, 200px) 1fr;
+    align-items: center;
+    gap: 10px;
+}
+
+.control-col {
+    display: grid;
+    gap: 10px;
+    justify-items: center;
+}
+
+.icon-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid white;
+    background: white;
+    display: grid;
+    place-items: center;
+    font-size: 15px;
+    color: black;
+    cursor: pointer;
+}
+
+.icon-btn.delete {
+    color: red;
+    font-size: 23px;
+}
+
+.slot {
+    width: 180px;
+    height: 180px;
+    border: 3px solid black;
+    background: white;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: 600;
+    color: #777;
+}
+
+.slot-filled {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.slot-image {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.slot-name {
+    margin: 0;
+    color: #000;
+    font-weight: 700;
+}
+
+.slot-meta {
+    margin: 0;
+    font-size: 0.85em;
+    color: #666;
+}
+
+.add-hint {
+    color: #8b8b8b;
+    font-weight: 600;
+}
+
+.forecast-panel {
+    background: rgba(255, 255, 255, .55);
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 12px;
+    width: 340px;
+}
+
+.forecast-title {
+    font-weight: 700;
+    text-align: center;
+    margin: 0 0 8px;
+    color: black;
+}
+
+.forecast-box {
+    height: 115px;
+    border: 1px dashed white;
+    border-radius: 8px;
+    background: #fff;
+    display: grid;
+    place-items: center;
+    color: #666;
+    font-size: 14px;
+}
+
+.gen-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 12px auto 0;
+    padding: 10px 14px;
+    border: 2px solid black;
+    border-radius: 12px;
+    background: #fafafa;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    color: black;
+}
+
+.gen-icon {
+    font-size: 18px;
+}
+
+.actions {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn.clear {
+    background: var(--danger);
+    color: white;
+}
+
+.btn.save {
+    background: var(--good);
+    color: #fff;
+}
+
+.closet-col {
+    background: #9f9586;
+    padding: 12px;
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "header header"
+        "cats   gallery";
+    gap: 12px;
+    color: black;
+}
+
+.catalog-header { grid-area: header; }
+.categories     { grid-area: cats; }
+.gallery        { grid-area: gallery; }
+
+.catalog-header {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.add-item {
+    justify-self: end;
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 8px 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.search-row {
+    display: grid;
+    grid-template-columns: 40px 40px 1fr 44px;
+    align-items: center;
+    gap: 10px;
+}
+
+.chip {
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    border: 2px solid black;
+    background: black;
+    color: white;
+    font-weight: 700;
+}
+
+.search {
+    position: relative;
+}
+
+.search input {
+    width: 100%;
+    height: 42px;
+    border-radius: 22px;
+    border: 2px solid black;
+    padding: 0 44px 0 18px;
+    font-size: 16px;
+    background: white;
+    color: black;
+}
+
+.search .glass {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: black;
+}
+
+.catalog {
+    display: grid;
+    gap: 16px;
+    margin-top: 14px;
+}
+
+.closet-col nav.categories {
+    position: static;
+    background: transparent;
+    display: block;
+    z-index: 10;
+    width: auto;
+}
+
+.categories ul {
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.categories li {
+    display: block;
+    margin: 6px 0;
+}
+
+.categories a {
+    display: block;
+    padding: 8px 10px;
+    border-radius: 8px;
+    color: #1f1f1f;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.categories a:hover,
+.categories a.active {
+    background: #e6dfd2;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    align-content: start;
+    overflow-y: auto;
+}
+
+.clothing {
+    aspect-ratio: 1/1;
+    background: #cfc6b7;
+    border-radius: 8px;
+    border: 3px solid #e5ded2;
+    cursor: pointer; 
+    overflow: hidden; 
+}
+
+.clothing-item-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
