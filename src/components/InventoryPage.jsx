@@ -35,7 +35,7 @@ export function InventoryPage(props) {
             return (
                 <div className="flex-column subsection clothing-card" key={object.description}>
                     <img src={object.file} className="clothing-card" />
-                    <h3 className="clothing-card-heading">{object.description}</h3>
+                    <h3 className="subheading clothing-card-heading">{object.description}</h3>
                     <p><strong>Category:</strong>{object.category}</p>
                     <p><strong>Location:</strong>{object.location}</p>
                     <p><strong>Color:</strong>{object.color}</p>
