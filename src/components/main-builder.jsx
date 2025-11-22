@@ -30,7 +30,7 @@ export function OutfitBuilderPage(){
     <section className="builder-col" aria-label="Outfit builder">
         <div className="builder-grid">
         <div className="layer-stack" aria-label="Outfit layers">
-            {LAYERS.map((layer) => (
+            {layerSlots.map((layer) => (
             <div className="layer-row" key={layer}>
                 <div className="control-col">
                 <button className="icon-btn">🔁</button>
@@ -55,7 +55,7 @@ export function OutfitBuilderPage(){
         <div className="forecast-panel">
             <p className="forecast-title">Today’s Forecast</p>
             <div className="forecast-box">Forecast widget placeholder</div>
-            <button className="gen-btn" onClick={handleGenerateOutfit}>
+            <button className="gen-btn" onClick={assignRandomItem}>
             <span className="gen-icon">🌤✨</span> Generate Outfit
             </button>
         </div>
