@@ -1,20 +1,25 @@
+import React, { useState } from 'react';
+
 export function InventoryPage(props) {
-    // I've done a large chunk of your page at this point, which I'll list below:
-    // Props data has been taken care of (it's based on your clothing examples from last time).
-    // React routing has been done.
-    // Automatic display of the props data has been done.
-    // Took care of the case where there may be no data (displays the empty inventory card you made).
-    // Fixed inline styling and changed to css styling.
-
-    // Your goal is to implement the search function (which should then filter the inventory display).
-    // This should likely use a onSubmit callback function which you can find an example of in my Login.jsx code or from Problem Set 7.
-    // This is a critical part of Project Draft 2 as we need to have on one of these features done.
-
-    // I've created a starting point below with comments explaining what things are already doing:
+    const [searchTerm, setSearchTerm] = useState("");
+    const [categoryFilter, setCategoryFilter] = useState("");
+    const [locationFilter, setLocationFilter] = useState("");
 
     // Grabs the data from props
-    const clothingList = props.clothingList
+    const clothingList = props.clothingList;
 
+    // Filter clothing item
+    const filteredClothingList = clothingList.filter((item) => {
+        const matchesSearch = searchTerm === "" || 
+            item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.color.toLowerCase().includes(searchTerm.toLowerCase());
+        
+        const matchesCategory = categoryFilter === "" || item.category === categoryFilter;
+        const matchesLocation = locationFilter === "" || item.location === locationFilter;
+        
+        return matchesSearch && matchesCategory && matchesLocation;
+    });
+    
     // This is the list that will display all of the clothing cards.
     let returnList = [];
 
@@ -26,11 +31,7 @@ export function InventoryPage(props) {
                 <p className="empty-submessage">Add your first clothing item using the form above to get started!</p>
             </div>
         )
-    }
-
-    // If the list of clothes isn't empty, populate with the Map function (you will need to user either filter or map, depending on how you want to do the filter)
-    // The card html is from your inventory page.
-    if (clothingList.length !== 0) {
+    } else {
         returnList = clothingList.map((object) => {
             return (
                 <div className="flex-column subsection clothing-card" key={object.description}>
@@ -48,8 +49,37 @@ export function InventoryPage(props) {
         })
     }
 
-    // The code I've written will change depending on the json, essentially. Your job is to now make it so that it filters once more based on criteria.
-    // Feel free to move around code I've written and whatnot.
+    // Item statistic
+    const totalItems = filteredClothingList.length;
+    const inCloset = filteredClothingList.filter(item => item.location === 'closet').length;
+    const inStorage = filteredClothingList.filter(item => item.location === 'storage').length;
+
+    // Filtering submission
+    const handleFilterSubmit = (event) => {
+        event.preventDefault();
+
+    };
+
+    // Handle search input change
+    const handleSearchChange = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    // Handle category filter change
+    const handleCategoryChange = (event) => {
+        setCategoryFilter(event.target.value);
+    };
+
+    // Handle location filter change
+    const handleLocationChange = (event) => {
+        setLocationFilter(event.target.value);
+    };
+
+    // Handle adding new item (placeholder function)
+    const handleAddItem = (event) => {
+        event.preventDefault();
+        alert("Add item functionality will be implemented in the final version");
+    };
 
     return (
         <div>
@@ -61,18 +91,19 @@ export function InventoryPage(props) {
                     <p className="header-paragraph">Track, organize, and manage your wardrobe</p>
                 </div>
             </div>
+
             {/* Search and Filter Section */}
             <section className="main-section flex-container">
                 <div className="flex-column subsection full-width">
                     <h2 className="header">Find Your Items</h2>
-                    <form className="flex-container filter-form">
+                    <form className="flex-container filter-form" onSubmit={handleFilterSubmit}>
                         <div className="flex-column submission-box">
                             <label htmlFor="searchInput">Search Items</label>
-                            <input type="text" id="searchInput" name="search" placeholder="Enter item name..." />
+                            <input type="text" id="searchInput" name="search" placeholder="Enter item name..." onChange={handleSearchChange}/>
                         </div>
                         <div className="flex-column submission-box">
                             <label htmlFor="categoryFilter">Category</label>
-                            <select id="categoryFilter" name="category">
+                            <select id="categoryFilter" name="category" onchange={handleCategoryChange}>
                                 <option value="">All Categories</option>
                                 <option value="tops">Tops</option>
                                 <option value="bottoms">Bottoms</option>
@@ -83,7 +114,7 @@ export function InventoryPage(props) {
                         </div>
                         <div className="flex-column submission-box">
                             <label htmlFor="locationFilter">Location</label>
-                            <select id="locationFilter" name="location">
+                            <select id="locationFilter" name="location" onChange={handleLocationChange}>
                                 <option value="">All Locations</option>
                                 <option value="closet">Closet</option>
                                 <option value="drawer">Drawer</option>
@@ -101,7 +132,7 @@ export function InventoryPage(props) {
             <section className="main-section flex-container">
                 <div className="flex-column subsection full-width">
                     <h2 className="header">Add New Clothing Item</h2>
-                    <form className="flex-container add-item-form">
+                    <form className="flex-container add-item-form" onSubmit={handleAddItem}>
                         <div className="flex-column submission-box form-field">
                             <label htmlFor="itemName">Item Name</label>
                             <input type="text" id="itemName" name="itemName" required />
@@ -145,7 +176,7 @@ export function InventoryPage(props) {
             {/* Inventory Display Section */}
             <section className="main-section">
                 <div className="subsection">
-                    <h2 className="header">Your Clothing Items</h2>
+                    <h2 className="header">Your Clothing Items ({filteredClothingList.length})</h2>
                     <div className="flex-container inventory-grid">
                         {returnList}
                     </div>
@@ -158,20 +189,20 @@ export function InventoryPage(props) {
                     <h2 className="header">Inventory Summary</h2>
                     <div className="flex-container">
                         <div className="flex-column subsection">
-                            <p className="subheading">0</p>
+                            <p className="subheading">{totalItems}</p>
                             <p>Total Items</p>
                         </div>
                         <div className="flex-column subsection">
-                            <p className="subheading">0</p>
+                            <p className="subheading">{inCloset}</p>
                             <p>In Closet</p>
                         </div>
                         <div className="flex-column subsection">
-                            <p className="subheading">0</p>
+                            <p className="subheading">{inStorage}</p>
                             <p>In Storage</p>
                         </div>
                     </div>
                 </div>
             </section>
         </div>
-    )
+    );
 }
