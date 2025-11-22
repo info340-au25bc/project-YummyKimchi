@@ -4,7 +4,7 @@ export function FrontPage() {
     return (
         <div>
             <div className="header-stack">
-                <img src="/public/img/main-page-header.avif" alt="Background image of clothes" className="header-img"/>
+                <img src="/img/main-page-header.avif" alt="Background image of clothes" className="header-img"/>
                 <div className="header-text">
                     <h1 className="header">The App to Manage your Wardrobe</h1>
                     <p className="header-paragraph">Keep Track. Build Outfits. Save.</p>
