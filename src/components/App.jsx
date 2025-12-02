@@ -52,7 +52,7 @@ function App(props) {
 
                     {/* Login Page Routing */}
                     <Route path='login' element={loggedIn ? <Navigate to='/loggedIn'/> : <Login logins={logins} buttonReact={handleLogIn} />} />
-                    <Route path='signUp' element={<SignUp />} />
+                    <Route path='signUp' element={<SignUp buttonReact={handleLogIn} />} />
                     <Route path='loggedIn' element={loggedIn ? <LoggedIn buttonReact={handleLogIn} /> : <Navigate to='/login' />} />
 
                     {/* Inventory Page Routing */}

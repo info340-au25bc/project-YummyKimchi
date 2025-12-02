@@ -7,12 +7,23 @@ export function SignUp(props) {
     const [password, setPassword] = useState("");
     let navigate = useNavigate();
     const auth = getAuth();
+    let reactButton = props.buttonReact;
 
     const handleClick = (event) => {
         // Update Login list, somehow.
         event.preventDefault();
+        if (password.length < 6) {
+            navigate('/signup');
+        }
         createUserWithEmailAndPassword(auth, username, password)
-        navigate('/home');
+            .then((data => {
+            reactButton();
+            navigate('/loggedIn');
+            }))
+            .catch((error)  => {
+                navigate('/signup');
+            })
+
     }
 
     const handleUser = (event) => {
@@ -29,6 +40,7 @@ export function SignUp(props) {
         <div className="login-box flex-column">
             <div className="flex-column subsection">
                 <p>Please choose an Email and Password (6 characters at minimum) to sign up!</p>
+                <p>You will be logged in immediately if your email/password is valid.</p>
             </div>
             <form action="login.html" method="GET">
                 <div className="flex-column subsection">

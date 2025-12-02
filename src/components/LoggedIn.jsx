@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import { getAuth, signOut } from "firebase/auth";
 
 export function LoggedIn(props) {
     let reactButton = props.buttonReact;
@@ -7,6 +8,8 @@ export function LoggedIn(props) {
 
     const handleButton = (event) => {
         event.preventDefault();
+        const auth = getAuth();
+        signOut(auth);
         reactButton();
         navigate('/login');
     }

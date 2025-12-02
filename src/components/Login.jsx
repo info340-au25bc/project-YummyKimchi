@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 export function Login(props) {
     const [username, setUsername] = useState("");
@@ -10,17 +11,16 @@ export function Login(props) {
     let navigate = useNavigate();
 
     const handleClick = (event) => {
-        let filteredLogins = logins.filter((object) => {
-            if (object.username === username && object.password === password) {
-                return true;
-            }
-            return false;
-        })
+        const auth = getAuth();
+        signInWithEmailAndPassword(auth, username, password)
+            .then((data) => {
+                reactButton();
+                navigate('/login');
+            })
+            .catch((error) => {
+                navigate('/login');
+            })
 
-        if (filteredLogins.length !== 0 && username !== "" && password !== "") {
-            reactButton();
-        }
-        navigate('/login');
     }
 
     const handleUser = (event) => {
