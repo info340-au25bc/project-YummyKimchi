@@ -41,8 +41,8 @@ export function Login(props) {
             <form>
                 <div className="flex-column subsection">
                     <div className="flex-column submission-box">
-                        <label htmlFor="userInput">Username</label>
-                        <input type="text" id="userInput" name="Your username" onChange={handleUser} value={username} />
+                        <label htmlFor="userInput">Email</label>
+                        <input type="text" id="userInput" name="Your email" onChange={handleUser} value={username} />
                     </div>
                     <div className="flex-column submission-box">
                         <label htmlFor="passwordInput">Password</label>

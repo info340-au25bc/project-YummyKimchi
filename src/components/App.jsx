@@ -11,6 +11,8 @@ import logins from '../data/logins.json';
 import clothes from '../data/exampleClothing.json';
 import clothes2 from '../data/clothes2.json';
 
+import { getDatabase, ref, set, push } from 'firebase/database';
+
 function App(props) {
     const [loggedIn, setLoggedIn] = useState(false);
 
