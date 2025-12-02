@@ -9,9 +9,11 @@ export function LoggedIn(props) {
     const handleButton = (event) => {
         event.preventDefault();
         const auth = getAuth();
-        signOut(auth);
-        reactButton();
-        navigate('/login');
+        signOut(auth)
+            .then((data) => {
+                reactButton();
+                navigate('/login');
+            })
     }
 
     return (

@@ -23,7 +23,6 @@ export function SignUp(props) {
             .catch((error)  => {
                 navigate('/signup');
             })
-
     }
 
     const handleUser = (event) => {
