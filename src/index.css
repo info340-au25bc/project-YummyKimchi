@@ -171,7 +171,7 @@ header {
 
 /* Section class for main element portions of text. */
 .main-section {
-    margin: 5rem 5rem;
+    margin: 5rem 0;
     margin-top: 0;
     padding: 3rem 3rem;
     background-color: rgb(95, 41, 41);
@@ -220,6 +220,7 @@ header {
 /* Formatting for subsection paragraph */
 .subsection-paragraph {
     margin-top: 0;
+    font-size: 16px;
 }
 
 /* Foot stylizations */
@@ -302,6 +303,10 @@ header {
 @media (min-width: 750px) {
     .flex-container-main-textbox {
         flex-wrap: nowrap;
+    }
+
+    .main-section {
+        margin: 5rem;
     }
 
     .more-menu {
