@@ -1,20 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getDatabase, ref, onValue, set, push, remove } from 'firebase/database';
 
 export function InventoryPage(props) {
     const [searchTerm, setSearchTerm] = useState("");
     const [categoryFilter, setCategoryFilter] = useState("");
     const [locationFilter, setLocationFilter] = useState("");
+    const [clothingList, setClothingList] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState(null);
+    
+    const navigate = useNavigate();
+    const auth = getAuth();
+    const database = getDatabase();
 
-    // Grabs the data from props
-    const clothingList = props.clothingList;
+    // Check authentication state
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            if (currentUser) {
+                setUser(currentUser);
+                loadUserInventory(currentUser.uid);
+            } else {
+                setUser(null);
+                setClothingList([]);
+                setLoading(false);
+                // Redirect to login if not authenticated
+                navigate('/login');
+            }
+        });
 
-    // Debug: log the clothing list to see what data we're working with
-    console.log('Clothing list:', clothingList);
+        return () => unsubscribe();
+    }, [auth, navigate]);
 
-    // Filter clothing items - this runs automatically when state changes
-    const filteredClothingList = clothingList.filter((item) => {
-        console.log('Checking item:', item);
+    // Load user's inventory from Firebase
+    const loadUserInventory = (userId) => {
+        setLoading(true);
+        const itemsRef = ref(database, `users/${userId}/inventory`);
         
+        const unsubscribe = onValue(itemsRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                const itemsArray = Object.keys(data).map(key => ({
+                    id: key,
+                    ...data[key]
+                }));
+                setClothingList(itemsArray);
+            } else {
+                setClothingList([]);
+            }
+            setLoading(false);
+        });
+
+        return unsubscribe;
+    };
+
+    // Filter clothing items
+    const filteredClothingList = clothingList.filter((item) => {
         const matchesSearch = searchTerm === "" || 
             (item.description && item.description.toLowerCase().includes(searchTerm.toLowerCase())) ||
             (item.color && item.color.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -25,60 +67,57 @@ export function InventoryPage(props) {
         const matchesLocation = locationFilter === "" || 
             (item.location && item.location.toLowerCase() === locationFilter.toLowerCase());
         
-        console.log('Matches:', { matchesSearch, matchesCategory, matchesLocation, item });
-        
         return matchesSearch && matchesCategory && matchesLocation;
     });
 
-    console.log('Filtered list:', filteredClothingList);
-    
-    // This is the list that will display all of the clothing cards.
-    let returnList = [];
+    // Handle adding new item to Firebase
+    const handleAddItem = (event) => {
+        event.preventDefault();
+        if (!user) {
+            alert("Please log in to add items");
+            return;
+        }
 
-    if (filteredClothingList.length === 0) {
-        returnList.push(
-            <div className="empty-inventory flex-column" key="empty">
-                <h3 className="empty-message">No items match your filters</h3>
-                <p className="empty-submessage">Try adjusting your search or filter criteria</p>
-                <p className="empty-submessage">Total items in inventory: {clothingList.length}</p>
-            </div>
-        )
-    } else {
-        returnList = filteredClothingList.map((object, index) => {
-            return (
-                <div className="flex-column subsection clothing-card" key={object.id || object.description + index}>
-                    <img src={object.file} className="clothing-card" alt={object.description} />
-                    <h3 className="subheading clothing-card-heading">{object.description}</h3>
-                    <p><strong>Category:</strong> {object.category}</p>
-                    <p><strong>Location:</strong> {object.location}</p>
-                    <p><strong>Color:</strong> {object.color}</p>
-                    <p><strong>Size:</strong> {object.size}</p>
-                    <div className="submission-box">
-                        <button>Edit Item</button>
-                    </div>
-                </div>
-            )
-        })
-    }
+        const form = event.target;
+        const newItem = {
+            description: form.itemName.value,
+            category: form.itemCategory.value,
+            location: form.itemLocation.value,
+            color: form.itemColor.value,
+            size: form.itemSize.value,
+            file: "/img/default-clothing.jpg",
+            createdAt: new Date().toISOString()
+        };
 
-    // Item statistics
-    const totalItems = filteredClothingList.length;
-    const inCloset = filteredClothingList.filter(item => item.location && item.location.toLowerCase() === 'closet').length;
-    const inStorage = filteredClothingList.filter(item => item.location && item.location.toLowerCase() === 'storage').length;
-
-    // Handle search input change
-    const handleSearchChange = (event) => {
-        setSearchTerm(event.target.value);
+        try {
+            const newItemRef = push(ref(database, `users/${user.uid}/inventory`));
+            set(newItemRef, newItem);
+            
+            // Reset form
+            form.reset();
+        } catch (error) {
+            alert("Failed to add item: " + error.message);
+        }
     };
 
-    // Handle category filter change
-    const handleCategoryChange = (event) => {
-        setCategoryFilter(event.target.value);
+    // Handle editing item
+    const handleEditItem = (item) => {
+        // You can implement edit functionality here if needed
+        alert("Edit functionality would be implemented here");
     };
 
-    // Handle location filter change
-    const handleLocationChange = (event) => {
-        setLocationFilter(event.target.value);
+    // Handle deleting item
+    const handleDeleteItem = async (itemId) => {
+        if (!user) return;
+
+        if (window.confirm("Are you sure you want to delete this item?")) {
+            try {
+                const itemRef = ref(database, `users/${user.uid}/inventory/${itemId}`);
+                await remove(itemRef);
+            } catch (error) {
+                alert("Failed to delete item: " + error.message);
+            }
+        }
     };
 
     // Clear all filters
@@ -88,11 +127,51 @@ export function InventoryPage(props) {
         setLocationFilter("");
     };
 
-    // Handle adding new item (placeholder function)
-    const handleAddItem = (event) => {
-        event.preventDefault();
-        alert("Add item functionality will be implemented in the final version");
-    };
+    // Display list
+    let returnList = [];
+
+    if (loading) {
+        returnList.push(
+            <div className="empty-inventory flex-column" key="loading">
+                <h3 className="empty-message">Loading your inventory...</h3>
+            </div>
+        );
+    } else if (filteredClothingList.length === 0) {
+        returnList.push(
+            <div className="empty-inventory flex-column" key="empty">
+                <h3 className="empty-message">
+                    {clothingList.length === 0 ? "Your inventory is empty" : "No items match your filters"}
+                </h3>
+                <p className="empty-submessage">
+                    {clothingList.length === 0 
+                        ? "Add your first clothing item using the form above!" 
+                        : "Try adjusting your search or filter criteria"}
+                </p>
+            </div>
+        );
+    } else {
+        returnList = filteredClothingList.map((item) => {
+            return (
+                <div className="flex-column subsection clothing-card" key={item.id}>
+                    <img src={item.file} className="clothing-card-img" alt={item.description} />
+                    <h3 className="subheading clothing-card-heading">{item.description}</h3>
+                    <p><strong>Category:</strong> {item.category}</p>
+                    <p><strong>Location:</strong> {item.location}</p>
+                    <p><strong>Color:</strong> {item.color}</p>
+                    <p><strong>Size:</strong> {item.size}</p>
+                    <div className="submission-box">
+                        <button onClick={() => handleEditItem(item)}>Edit Item</button>
+                        <button onClick={() => handleDeleteItem(item.id)} style={{marginLeft: '10px'}}>Delete</button>
+                    </div>
+                </div>
+            );
+        });
+    }
+
+    // Statistics
+    const totalItems = filteredClothingList.length;
+    const inCloset = filteredClothingList.filter(item => item.location === 'closet').length;
+    const inStorage = filteredClothingList.filter(item => item.location === 'storage').length;
 
     return (
         <div>
@@ -115,19 +194,17 @@ export function InventoryPage(props) {
                             <input 
                                 type="text" 
                                 id="searchInput" 
-                                name="search" 
                                 placeholder="Enter item name or color..." 
                                 value={searchTerm}
-                                onChange={handleSearchChange}
+                                onChange={(e) => setSearchTerm(e.target.value)}
                             />
                         </div>
                         <div className="flex-column submission-box">
                             <label htmlFor="categoryFilter">Category</label>
                             <select 
                                 id="categoryFilter" 
-                                name="category" 
                                 value={categoryFilter}
-                                onChange={handleCategoryChange}
+                                onChange={(e) => setCategoryFilter(e.target.value)}
                             >
                                 <option value="">All Categories</option>
                                 <option value="tops">Tops</option>
@@ -141,33 +218,24 @@ export function InventoryPage(props) {
                             <label htmlFor="locationFilter">Location</label>
                             <select 
                                 id="locationFilter" 
-                                name="location" 
                                 value={locationFilter}
-                                onChange={handleLocationChange}
+                                onChange={(e) => setLocationFilter(e.target.value)}
                             >
                                 <option value="">All Locations</option>
                                 <option value="closet">Closet</option>
                                 <option value="drawer">Drawer</option>
-                                <option value="laundry">Laundry</option>
                                 <option value="storage">Storage</option>
+                                <option value="laundry">Laundry</option>
                             </select>
                         </div>
                         <div className="flex-column submission-box filter-button">
                             <button type="button" onClick={handleClearFilters}>Clear Filters</button>
                         </div>
                     </div>
-                    <div className="current-filters">
-                        <p>Active filters: 
-                            {searchTerm && ` Search: "${searchTerm}"`}
-                            {categoryFilter && ` Category: ${categoryFilter}`}
-                            {locationFilter && ` Location: ${locationFilter}`}
-                            {!searchTerm && !categoryFilter && !locationFilter && ' None'}
-                        </p>
-                    </div>
                 </div>
             </section>
 
-            {/* Rest of your component remains the same */}
+            {/* Add New Item Section */}
             <section className="main-section flex-container">
                 <div className="flex-column subsection full-width">
                     <h2 className="header">Add New Clothing Item</h2>
@@ -193,8 +261,8 @@ export function InventoryPage(props) {
                                 <option value="">Select Location</option>
                                 <option value="closet">Closet</option>
                                 <option value="drawer">Drawer</option>
-                                <option value="laundry">Laundry</option>
                                 <option value="storage">Storage</option>
+                                <option value="laundry">Laundry</option>
                             </select>
                         </div>
                         <div className="flex-column submission-box form-field">
@@ -212,6 +280,7 @@ export function InventoryPage(props) {
                 </div>
             </section>
             
+            {/* Inventory Display Section */}
             <section className="main-section">
                 <div className="subsection">
                     <h2 className="header">Your Clothing Items ({filteredClothingList.length})</h2>
@@ -221,6 +290,7 @@ export function InventoryPage(props) {
                 </div>
             </section>
             
+            {/* Statistics Section */}
             <section className="main-section flex-container">
                 <div className="flex-column subsection stats-section">
                     <h2 className="header">Inventory Summary</h2>
