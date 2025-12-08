@@ -176,6 +176,7 @@ header {
     padding: 3rem 3rem;
     background-color: rgb(95, 41, 41);
     font-size: 1.5rem;
+    
 }
 
 /* Section class for element signifying it is now flex display and sorting items within as a column */

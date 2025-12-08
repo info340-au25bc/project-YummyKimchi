@@ -6,6 +6,7 @@ import { SignUp } from './SignUp';
 import { LoggedIn } from './LoggedIn';
 import { InventoryPage } from './InventoryPage';
 import { OutfitBuilderPage } from './main-builder';
+import { motion } from "motion/react"
  
 import logins from '../data/logins.json';
 import clothes from '../data/exampleClothing.json';

@@ -1,16 +1,17 @@
 import React from "react"
+import { motion } from "motion/react"
 
 export function FrontPage() {
     return (
         <div>
             <div className="header-stack">
                 <img src="/img/main-page-header.avif" alt="Background image of clothes" className="header-img"/>
-                <div className="header-text">
+                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="header-text">
                     <h1 className="header">The App to Manage your Wardrobe</h1>
                     <p className="header-paragraph">Keep Track. Build Outfits. Save.</p>
-                </div>
+                </motion.div>
             </div>
-            <section className="main-section flex-container-main-textbox">
+            <motion.section initial={{ scale: 0 }} animate={{ scale: 1 }} className="main-section flex-container-main-textbox">
                 <div className="flex-column subsection">
                     <h2 className="header">FEATURES</h2>
                     <p className="subsection-paragraph">The app offers key features needed to manage and sort through a wardrobe. As of now, there is an Inventory, Wardrobe Builder, and Account.</p>
@@ -29,7 +30,7 @@ export function FrontPage() {
                         <p className="subsection-paragraph">Save your clothing inventory and wardrobe combinations by signing up and logging in!</p>
                     </div>
                 </div>
-            </section>
+            </motion.section>
         </div>
     )
 }
