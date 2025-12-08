@@ -56,9 +56,9 @@ function App(props) {
                     <Route path='loggedIn' element={loggedIn ? <LoggedIn buttonReact={handleLogIn} /> : <Navigate to='/login' />} />
 
                     {/* Inventory Page Routing */}
-                    <Route path='inventory' element={<InventoryPage clothingList={clothes} />} />
+                    <Route path='inventory' element={loggedIn ? <InventoryPage clothingList={clothes} /> : <Navigate to='/login' /> } />
 
-                    <Route path= 'main-builder' element={<OutfitBuilderPage clothingList={clothes2} /> }/>
+                    <Route path='main-builder' element={loggedIn ? <OutfitBuilderPage clothingList={clothes2} /> : <Navigate to='/login' /> }/>
                 </Routes>
             </main>
             <footer>

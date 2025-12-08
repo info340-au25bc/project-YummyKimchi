@@ -5,6 +5,7 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 export function SignUp(props) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
     let navigate = useNavigate();
     const auth = getAuth();
     let reactButton = props.buttonReact;
@@ -21,8 +22,14 @@ export function SignUp(props) {
             navigate('/loggedIn');
             }))
             .catch((error)  => {
-                navigate('/signup');
-            })
+                if (error.code === "auth/email-already-in-use") {
+                    setErrorMessage("That email is already registered. Try logging in instead.");
+                } else if (error.code === "auth/invalid-email") {
+                    setErrorMessage("Please enter a valid email address.");
+                } else {
+                    setErrorMessage("Sign-up failed. Please try again.");
+                }
+            });
     }
 
     const handleUser = (event) => {
@@ -38,8 +45,8 @@ export function SignUp(props) {
     return (
         <div className="login-box flex-column">
             <div className="flex-column subsection">
-                <p>Please choose an Email and Password (6 characters at minimum) to sign up!</p>
-                <p>You will be logged in immediately if your email/password is valid.</p>
+                <p>Please choose a unique Email and Password (6 characters at minimum) to sign up!</p>
+                {errorMessage && <p className="error">{errorMessage}</p>}
             </div>
             <form action="login.html" method="GET">
                 <div className="flex-column subsection">
