@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getDatabase, ref, onValue, set, push, remove } from 'firebase/database';
@@ -10,10 +10,16 @@ export function InventoryPage(props) {
     const [clothingList, setClothingList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(null);
+    const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(12); // Items per page for pagination
+    const [uploadingImage, setUploadingImage] = useState(false);
+    const [imagePreview, setImagePreview] = useState(null);
     
     const navigate = useNavigate();
     const auth = getAuth();
     const database = getDatabase();
+    const fileInputRef = useRef(null);
 
     // Check authentication state
     useEffect(() => {
@@ -45,11 +51,14 @@ export function InventoryPage(props) {
                     id: key,
                     ...data[key]
                 }));
+                // Sort by creation date, newest first
+                itemsArray.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 setClothingList(itemsArray);
             } else {
                 setClothingList([]);
             }
             setLoading(false);
+            setCurrentPage(1); // Reset to first page when data loads
         });
 
         return unsubscribe;
@@ -70,8 +79,49 @@ export function InventoryPage(props) {
         return matchesSearch && matchesCategory && matchesLocation;
     });
 
+    // Pagination calculations
+    const totalPages = Math.ceil(filteredClothingList.length / itemsPerPage);
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = filteredClothingList.slice(indexOfFirstItem, indexOfLastItem);
+
+    // Handle page change
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+    // Handle image file selection
+    const handleImageSelect = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            // Check file size (limit to 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert("Image size should be less than 5MB");
+                return;
+            }
+
+            // Create preview
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                setImagePreview(e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    // Upload image to Firebase and return data URL
+    const uploadImageToFirebase = async (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const dataUrl = reader.result;
+                resolve(dataUrl);
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+    };
+
     // Handle adding new item to Firebase
-    const handleAddItem = (event) => {
+    const handleAddItem = async (event) => {
         event.preventDefault();
         if (!user) {
             alert("Please log in to add items");
@@ -79,22 +129,45 @@ export function InventoryPage(props) {
         }
 
         const form = event.target;
+        const fileInput = form.querySelector('input[type="file"]');
+        const file = fileInput.files[0];
+
+        let imageUrl = "/img/default-clothing.jpg";
+        
+        if (file) {
+            setUploadingImage(true);
+            try {
+                imageUrl = await uploadImageToFirebase(file);
+            } catch (error) {
+                alert("Failed to upload image: " + error.message);
+                setUploadingImage(false);
+                return;
+            }
+            setUploadingImage(false);
+        }
+
         const newItem = {
             description: form.itemName.value,
             category: form.itemCategory.value,
             location: form.itemLocation.value,
             color: form.itemColor.value,
             size: form.itemSize.value,
-            file: "/img/default-clothing.jpg",
+            file: imageUrl,
             createdAt: new Date().toISOString()
         };
 
         try {
             const newItemRef = push(ref(database, `users/${user.uid}/inventory`));
-            set(newItemRef, newItem);
+            await set(newItemRef, newItem);
             
-            // Reset form
+            // Reset form and preview
             form.reset();
+            setImagePreview(null);
+            if (fileInputRef.current) {
+                fileInputRef.current.value = '';
+            }
+            
+            alert("Item added successfully!");
         } catch (error) {
             alert("Failed to add item: " + error.message);
         }
@@ -114,6 +187,7 @@ export function InventoryPage(props) {
             try {
                 const itemRef = ref(database, `users/${user.uid}/inventory/${itemId}`);
                 await remove(itemRef);
+                alert("Item deleted successfully!");
             } catch (error) {
                 alert("Failed to delete item: " + error.message);
             }
@@ -125,9 +199,16 @@ export function InventoryPage(props) {
         setSearchTerm("");
         setCategoryFilter("");
         setLocationFilter("");
+        setCurrentPage(1);
     };
 
-    // Display list
+    // Generate page numbers for pagination
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+    }
+
+    // Display list based on view mode
     let returnList = [];
 
     if (loading) {
@@ -150,21 +231,42 @@ export function InventoryPage(props) {
             </div>
         );
     } else {
-        returnList = filteredClothingList.map((item) => {
-            return (
-                <div className="flex-column subsection clothing-card" key={item.id}>
-                    <img src={item.file} className="clothing-card-img" alt={item.description} />
-                    <h3 className="subheading clothing-card-heading">{item.description}</h3>
-                    <p><strong>Category:</strong> {item.category}</p>
-                    <p><strong>Location:</strong> {item.location}</p>
-                    <p><strong>Color:</strong> {item.color}</p>
-                    <p><strong>Size:</strong> {item.size}</p>
-                    <div className="submission-box">
-                        <button onClick={() => handleEditItem(item)}>Edit Item</button>
-                        <button onClick={() => handleDeleteItem(item.id)} style={{marginLeft: '10px'}}>Delete</button>
+        returnList = currentItems.map((item) => {
+            if (viewMode === 'list') {
+                return (
+                    <div className="flex-row subsection clothing-card list-view" key={item.id}>
+                        <img src={item.file} className="clothing-card-img list-img" alt={item.description} />
+                        <div className="clothing-card-content">
+                            <h3 className="subheading clothing-card-heading">{item.description}</h3>
+                            <div className="clothing-card-details">
+                                <p><strong>Category:</strong> {item.category}</p>
+                                <p><strong>Location:</strong> {item.location}</p>
+                                <p><strong>Color:</strong> {item.color}</p>
+                                <p><strong>Size:</strong> {item.size}</p>
+                            </div>
+                            <div className="submission-box">
+                                <button onClick={() => handleEditItem(item)}>Edit Item</button>
+                                <button onClick={() => handleDeleteItem(item.id)} style={{marginLeft: '10px'}}>Delete</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            );
+                );
+            } else {
+                return (
+                    <div className="flex-column subsection clothing-card grid-view" key={item.id}>
+                        <img src={item.file} className="clothing-card-img" alt={item.description} />
+                        <h3 className="subheading clothing-card-heading">{item.description}</h3>
+                        <p><strong>Category:</strong> {item.category}</p>
+                        <p><strong>Location:</strong> {item.location}</p>
+                        <p><strong>Color:</strong> {item.color}</p>
+                        <p><strong>Size:</strong> {item.size}</p>
+                        <div className="submission-box">
+                            <button onClick={() => handleEditItem(item)}>Edit Item</button>
+                            <button onClick={() => handleDeleteItem(item.id)} style={{marginLeft: '10px'}}>Delete</button>
+                        </div>
+                    </div>
+                );
+            }
         });
     }
 
@@ -196,7 +298,10 @@ export function InventoryPage(props) {
                                 id="searchInput" 
                                 placeholder="Enter item name or color..." 
                                 value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
+                                onChange={(e) => {
+                                    setSearchTerm(e.target.value);
+                                    setCurrentPage(1);
+                                }}
                             />
                         </div>
                         <div className="flex-column submission-box">
@@ -204,7 +309,10 @@ export function InventoryPage(props) {
                             <select 
                                 id="categoryFilter" 
                                 value={categoryFilter}
-                                onChange={(e) => setCategoryFilter(e.target.value)}
+                                onChange={(e) => {
+                                    setCategoryFilter(e.target.value);
+                                    setCurrentPage(1);
+                                }}
                             >
                                 <option value="">All Categories</option>
                                 <option value="tops">Tops</option>
@@ -219,7 +327,10 @@ export function InventoryPage(props) {
                             <select 
                                 id="locationFilter" 
                                 value={locationFilter}
-                                onChange={(e) => setLocationFilter(e.target.value)}
+                                onChange={(e) => {
+                                    setLocationFilter(e.target.value);
+                                    setCurrentPage(1);
+                                }}
                             >
                                 <option value="">All Locations</option>
                                 <option value="closet">Closet</option>
@@ -273,8 +384,26 @@ export function InventoryPage(props) {
                             <label htmlFor="itemSize">Size</label>
                             <input type="text" id="itemSize" name="itemSize" />
                         </div>
+                        <div className="flex-column submission-box form-field">
+                            <label htmlFor="itemImage">Image</label>
+                            <input 
+                                type="file" 
+                                id="itemImage" 
+                                name="itemImage" 
+                                accept="image/*"
+                                onChange={handleImageSelect}
+                                ref={fileInputRef}
+                            />
+                            {imagePreview && (
+                                <div className="image-preview">
+                                    <img src={imagePreview} alt="Preview" style={{maxWidth: '100px', marginTop: '10px'}} />
+                                </div>
+                            )}
+                        </div>
                         <div className="flex-column submission-box full-width">
-                            <button type="submit">Add to Inventory</button>
+                            <button type="submit" disabled={uploadingImage}>
+                                {uploadingImage ? "Uploading Image..." : "Add to Inventory"}
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -283,10 +412,60 @@ export function InventoryPage(props) {
             {/* Inventory Display Section */}
             <section className="main-section">
                 <div className="subsection">
-                    <h2 className="header">Your Clothing Items ({filteredClothingList.length})</h2>
-                    <div className="flex-container inventory-grid">
+                    <div className="inventory-header">
+                        <h2 className="header">Your Clothing Items ({filteredClothingList.length})</h2>
+                        <div className="view-controls">
+                            <button 
+                                className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`}
+                                onClick={() => setViewMode('grid')}
+                            >
+                                Grid
+                            </button>
+                            <button 
+                                className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
+                                onClick={() => setViewMode('list')}
+                            >
+                                List
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div className={`inventory-display ${viewMode === 'grid' ? 'inventory-grid' : 'inventory-list'}`}>
                         {returnList}
                     </div>
+                    
+                    {/* Pagination */}
+                    {totalPages > 1 && (
+                        <div className="pagination">
+                            <button 
+                                onClick={() => paginate(currentPage - 1)} 
+                                disabled={currentPage === 1}
+                                className="page-btn"
+                            >
+                                Previous
+                            </button>
+                            
+                            <div className="page-numbers">
+                                {pageNumbers.map(number => (
+                                    <button
+                                        key={number}
+                                        onClick={() => paginate(number)}
+                                        className={`page-number ${currentPage === number ? 'active' : ''}`}
+                                    >
+                                        {number}
+                                    </button>
+                                ))}
+                            </div>
+                            
+                            <button 
+                                onClick={() => paginate(currentPage + 1)} 
+                                disabled={currentPage === totalPages}
+                                className="page-btn"
+                            >
+                                Next
+                            </button>
+                        </div>
+                    )}
                 </div>
             </section>
             
