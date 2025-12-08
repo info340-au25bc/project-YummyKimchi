@@ -10,9 +10,9 @@ export function InventoryPage(props) {
     const [clothingList, setClothingList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(null);
-    const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
+    const [viewMode, setViewMode] = useState('grid');
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(12); // Items per page for pagination
+    const [itemsPerPage] = useState(12);
     const [uploadingImage, setUploadingImage] = useState(false);
     const [imagePreview, setImagePreview] = useState(null);
     
@@ -31,7 +31,6 @@ export function InventoryPage(props) {
                 setUser(null);
                 setClothingList([]);
                 setLoading(false);
-                // Redirect to login if not authenticated
                 navigate('/login');
             }
         });
@@ -58,7 +57,7 @@ export function InventoryPage(props) {
                 setClothingList([]);
             }
             setLoading(false);
-            setCurrentPage(1); // Reset to first page when data loads
+            setCurrentPage(1);
         });
 
         return unsubscribe;
