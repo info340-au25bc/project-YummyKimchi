@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { getAuth, signOut } from "firebase/auth";
+import { motion } from "motion/react"
 
 export function LoggedIn(props) {
     let reactButton = props.buttonReact;
@@ -17,11 +18,11 @@ export function LoggedIn(props) {
     }
 
     return (
-        <div className="login-box flex-column">
+        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="login-box flex-column">
             <div className="flex-column subsection">
                 <p>You are logged in.</p>
             </div>
             <div className="submission-box subsection"><button type="button" onClick={handleButton}>Logout</button></div>
-        </div>
+        </motion.div>
     )
 }

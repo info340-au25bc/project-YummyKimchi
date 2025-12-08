@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { motion } from "motion/react"
 
 export function Login(props) {
     const [username, setUsername] = useState("");
@@ -34,7 +35,7 @@ export function Login(props) {
     }
 
     return (
-        <div className="login-box flex-column">
+        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="login-box flex-column">
             <div className="flex-column subsection">
                 <p>Please log in!</p>
             </div>
@@ -54,6 +55,6 @@ export function Login(props) {
             <div className="subsection">
                 <p><Link to='/signUp'>Sign up</Link> if you don't have an account!</p>
             </div>
-        </div>
+        </motion.div>
     )
 }

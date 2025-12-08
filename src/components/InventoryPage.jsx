@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { getDatabase, ref, onValue, set, push, remove } from 'firebase/database';
+import { motion } from "motion/react"
 
 export function InventoryPage(props) {
     const [searchTerm, setSearchTerm] = useState("");
@@ -279,14 +280,14 @@ export function InventoryPage(props) {
             {/* Top image and Title */}
             <div className="header-stack">
                 <img src="/img/main-page-header.avif" alt="Background image of clothes" className="header-img"/>
-                <div className="header-text">
+                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="header-text">
                     <h1 className="header">Your Clothing Inventory</h1>
                     <p className="header-paragraph">Track, organize, and manage your wardrobe</p>
-                </div>
+                </motion.div>
             </div>
 
             {/* Search and Filter Section */}
-            <section className="main-section flex-container">
+            <motion.section initial={{ scale: 0 }} animate={{ scale: 1 }} className="main-section flex-container">
                 <div className="flex-column subsection full-width">
                     <h2 className="header">Find Your Items</h2>
                     <div className="flex-container filter-form">
@@ -343,7 +344,7 @@ export function InventoryPage(props) {
                         </div>
                     </div>
                 </div>
-            </section>
+            </motion.section>
 
             {/* Add New Item Section */}
             <section className="main-section flex-container">

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { motion } from "motion/react"
 
 export function SignUp(props) {
     const [username, setUsername] = useState("");
@@ -43,7 +44,7 @@ export function SignUp(props) {
     }
 
     return (
-        <div className="login-box flex-column">
+        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="login-box flex-column">
             <div className="flex-column subsection">
                 <p>Please choose a unique Email and Password (6 characters at minimum) to sign up!</p>
                 {errorMessage && <p className="error">{errorMessage}</p>}
@@ -61,6 +62,6 @@ export function SignUp(props) {
                     <div className="flex-column submission-box"><button onClick={handleClick}>Submit</button></div>
                 </div>
             </form>
-        </div>
+        </motion.div>
     )
 }
