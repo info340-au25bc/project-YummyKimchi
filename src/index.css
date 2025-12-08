@@ -68,7 +68,6 @@ nav ul {
     display: none;
 }
 
-
 /* inserts menu bars that substitute the left links on smaller (mobile) screens */
 .more-menu {
     display:flex;
@@ -758,12 +757,6 @@ header {
     
     .header-paragraph {
         font-size: 1.5rem;
-    }
-    
-    /* Main section adjustments */
-    .main-section {
-        margin: 3rem 1rem;
-        padding: 2rem 1rem;
     }
     
     /* Filter form adjustments */

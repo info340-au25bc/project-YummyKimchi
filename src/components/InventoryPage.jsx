@@ -347,7 +347,7 @@ export function InventoryPage(props) {
             </motion.section>
 
             {/* Add New Item Section */}
-            <section className="main-section flex-container">
+            <motion.section initial={{ scale: 0 }} animate={{ scale: 1 }} className="main-section flex-container">
                 <div className="flex-column subsection full-width">
                     <h2 className="header">Add New Clothing Item</h2>
                     <form className="flex-container add-item-form" onSubmit={handleAddItem}>
@@ -407,7 +407,7 @@ export function InventoryPage(props) {
                         </div>
                     </form>
                 </div>
-            </section>
+            </motion.section>
             
             {/* Inventory Display Section */}
             <section className="main-section">

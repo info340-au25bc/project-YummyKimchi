@@ -59,7 +59,7 @@ export function SignUp(props) {
                         <label htmlFor="passwordInput">Password</label>
                         <input type="password" id="passwordInput" name="Your password" onChange={handlePassword} value={password} />
                     </div>
-                    <div className="flex-column submission-box"><button onClick={handleClick}>Submit</button></div>
+                    <div className="flex-column submission-box"><motion.button initial={{ scale: 0 }} animate={{ scale: 1 }} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.8 }} onClick={handleClick}>Submit</motion.button></div>
                 </div>
             </form>
         </motion.div>

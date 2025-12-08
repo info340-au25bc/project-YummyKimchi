@@ -32,16 +32,16 @@ function App(props) {
         <div className='grid'>
             <header>
                 <nav>
-                    <div className="app-home"><Link to='/home'>HOME</Link></div>
+                    <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.8 }} className="app-home"><Link to='/home'>HOME</Link></motion.div>
                     <div className="more-menu">
                         <Link to='/inventory'><img src="/img/inventory.png" className="menu-pic" /></Link>
                         <Link to = '/main-builder'> <img src="/img/outfit-builder.png" className="menu-pic" /> </Link>
                         <Link to='/loggedIn'><img src="/img/account.png" className="menu-pic" /></Link>
                     </div>
                     <ul className="app-links">
-                        <li><Link to='/inventory'>INVENTORY</Link></li>
-                        <li><Link to ='/main-builder'>OUTFIT BUILDER</Link></li>
-                        <li><Link to='/loggedIn'>ACCOUNT</Link></li>
+                        <motion.li initial={{ scale: 0 }} animate={{ scale: 1 }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.8 }}><Link to='/inventory'>INVENTORY</Link></motion.li>
+                        <motion.li initial={{ scale: 0 }} animate={{ scale: 1 }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.8 }}><Link to ='/main-builder'>OUTFIT BUILDER</Link></motion.li>
+                        <motion.li initial={{ scale: 0 }} animate={{ scale: 1 }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.8 }}><Link to='/loggedIn'>ACCOUNT</Link></motion.li>
                     </ul>
                 </nav>
             </header>
