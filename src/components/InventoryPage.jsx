@@ -271,7 +271,7 @@ export function InventoryPage(props) {
         <div>
             {/* Top image and Title */}
             <div className="header-stack">
-                <img src="/img/main-page-header.avif" alt="Background image of clothes" className="header-img"/>
+                <img src="/img/inventoryheader.jpg" alt="Background image of clothes" className="header-img"/>
                 <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="header-text">
                     <h1 className="header">Your Clothing Inventory</h1>
                     <p className="header-paragraph">Track, organize, and manage your wardrobe</p>
