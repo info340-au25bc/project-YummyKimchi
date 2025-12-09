@@ -378,10 +378,6 @@ ul.subheading {
         flex-wrap: nowrap;
     }
 
-    .main-section {
-        margin: 5rem;
-    }
-
     .more-menu {
         display: none;
     }
@@ -403,6 +399,12 @@ ul.subheading {
     .login-box {
         width: 30%;
 
+    }
+}
+
+@media (min-width: 950px) {
+    .main-section {
+        margin: 5rem;
     }
 }
 
