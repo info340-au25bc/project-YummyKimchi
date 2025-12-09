@@ -1100,29 +1100,30 @@ header {
 }
 
 .forecast-panel {
-    background: rgba(255, 255, 255, .55);
-    border: 1px solid white;
-    border-radius: 10px;
-    padding: 12px;
-    width: 340px;
-}
-
-.forecast-title {
-    font-weight: 700;
-    text-align: center;
-    margin: 0 0 8px;
-    color: black;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: stretch;
 }
 
 .forecast-box {
-    height: 115px;
-    border: 1px dashed white;
-    border-radius: 8px;
-    background: #fff;
-    display: grid;
-    place-items: center;
-    color: #666;
-    font-size: 14px;
+  background: #f7f3eb;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  text-align: center;
+}
+
+.forecast-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.forecast-icon {
+  width: 48px;
+  height: 48px;
 }
 
 .gen-btn {
