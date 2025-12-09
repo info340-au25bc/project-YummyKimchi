@@ -33,7 +33,7 @@ export function FrontPage() {
 
                 <div className="tab-content subsection-paragraph">
                     <AnimatePresence mode="wait">
-                        <motion.div key={selectedTab.label} initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -10, opacity: 0 }} transition={{ duration: 0.2 }} className="content-card subsection-paragraph">{selectedTab.content.split('\n').map((line, i) => (<p>{line}</p>))}</motion.div>
+                        <motion.div key={selectedTab.label} initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -10, opacity: 0 }} transition={{ duration: 0.2 }} className="content-card subsection-paragraph">{selectedTab.content.split('\n').map((line, i) => (<p key={i}>{line}</p>))}</motion.div>
                     </AnimatePresence>
                 </div>
             </div>
