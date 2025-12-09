@@ -254,7 +254,7 @@ export function InventoryPage(props) {
                         <p><span className='clothing-card-span-styling'>Color:</span> {item.color}</p>
                         <p><span className='clothing-card-span-styling'>Size:</span> {item.size}</p>
                         <div className="submission-box">
-                            <button onClick={() => handleDeleteItem(item.id)}>Delete</button>
+                            <motion.button initial={{ scale: 0 }} animate={{ scale: 1 }} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.8 }} onClick={() => handleDeleteItem(item.id)}>Delete</motion.button>
                         </div>
                     </div>
                 );
@@ -332,7 +332,7 @@ export function InventoryPage(props) {
                             </select>
                         </div>
                         <div className="flex-column submission-box filter-button">
-                            <button type="button" onClick={handleClearFilters}>Clear Filters</button>
+                            <motion.button initial={{ scale: 0 }} animate={{ scale: 1 }} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.8 }} className='button-styling' type="button" onClick={handleClearFilters}>Clear Filters</motion.button>
                         </div>
                     </div>
                 </div>
@@ -378,7 +378,7 @@ export function InventoryPage(props) {
                         </div>
                         <div className="flex-column submission-box form-field">
                             <label htmlFor="itemImage">Image</label>
-                            <input 
+                            <motion.input initial={{ scale: 0 }} animate={{ scale: 1 }} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.8 }}
                                 type="file" 
                                 id="itemImage" 
                                 name="itemImage" 
@@ -393,9 +393,9 @@ export function InventoryPage(props) {
                             )}
                         </div>
                         <div className="flex-column submission-box full-width">
-                            <button type="submit" disabled={uploadingImage}>
+                            <motion.button initial={{ scale: 0 }} animate={{ scale: 1 }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.8 }} type="submit" disabled={uploadingImage} className='button-styling'>
                                 {uploadingImage ? "Uploading Image..." : "Add to Inventory"}
-                            </button>
+                            </motion.button>
                         </div>
                     </form>
                 </div>
@@ -407,24 +407,21 @@ export function InventoryPage(props) {
                     <div className="inventory-header">
                         <h2 className="header">Your Clothing Items ({filteredClothingList.length})</h2>
                         <div className="view-controls">
-                            <button 
+                            <motion.button initial={{ scale: 0 }} animate={{ scale: 1 }} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.8 }}
                                 className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`}
-                                onClick={() => setViewMode('grid')}
-                            >
+                                onClick={() => setViewMode('grid')}>
                                 Picture
-                            </button>
-                            <button 
+                            </motion.button>
+                            <motion.button initial={{ scale: 0 }} animate={{ scale: 1 }} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.8 }}
                                 className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
-                                onClick={() => setViewMode('list')}
-                            >
+                                onClick={() => setViewMode('list')}>
                                 List
-                            </button>
-                            <button 
+                            </motion.button>
+                            <motion.button initial={{ scale: 0 }} animate={{ scale: 1 }} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.8 }}
                                 className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
-                                onClick={() => setDateSort(!dateNewest)}
-                            >
+                                onClick={() => setDateSort(!dateNewest)}>
                                 Date Sort
-                            </button>
+                            </motion.button>
                         </div>
                     </div>
                     

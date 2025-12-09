@@ -460,6 +460,16 @@ header {
     cursor: pointer;
 }
 
+.button-styling {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: #381818;
+    color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
 .clothing-card .submission-box button:hover {
     background-color: #852a2a;
 }
