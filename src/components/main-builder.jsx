@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getDatabase, ref, onValue } from 'firebase/database';
+import { getDatabase, ref, onValue, push, set } from 'firebase/database';
 import { useNavigate } from "react-router";
 
 export function OutfitBuilderPage(props) {
@@ -11,7 +11,7 @@ export function OutfitBuilderPage(props) {
     const [forecast, setForecast] = useState(null);
     const [weatherLoading, setWeatherLoading] = useState(false);
     const [weatherError, setWeatherError] = useState(null);
-
+    const [savedOutfits, setSavedOutfits] = useState([]);
 
 const handleFetchWeather = async (e) => {
     e.preventDefault();
@@ -105,7 +105,7 @@ const handleFetchWeather = async (e) => {
     .map((item) => {
         const slot = categoryToSlot(item.category);
         return {
-            item,
+            ...item,
             slot,    
             img: item.file,           
             name: item.description,  
@@ -122,6 +122,7 @@ const handleFetchWeather = async (e) => {
         const database = getDatabase();
 
         let unsubscribeItems = null;
+        let unsubscribeOutfits = null;
 
         const unsubscribeAuth = onAuthStateChanged(auth, (currentUser) => {
             if (currentUser) {
@@ -143,18 +144,35 @@ const handleFetchWeather = async (e) => {
                     }
                     setLoading(false);
                 });
+            const outfitsRef = ref(database, `users/${currentUser.uid}/outfits`);
+                unsubscribeOutfits = onValue(outfitsRef, (snapshot) => {
+                    const data = snapshot.val();
+                    if (data) {
+                        const outfitsArray = Object.keys(data).map((key) => ({
+                            id: key,
+                            ...data[key],
+                        }));
+                        outfitsArray.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                        setSavedOutfits(outfitsArray);
+                    } else {
+                        setSavedOutfits([]);
+                    }
+                });
             } else {
                 setUser(null);
                 setFirebaseItems([]);
+                setSavedOutfits([]);
                 setLoading(false);
             }
         });
 
         return () => {
             if (unsubscribeItems) unsubscribeItems();
+            if (unsubscribeOutfits) unsubscribeOutfits();
             unsubscribeAuth();
         };
     }, []);
+
 
     const handleClear = () => {
         setSlots({ hat: null, top: null, bottoms: null, shoes: null });
@@ -184,6 +202,73 @@ const handleFetchWeather = async (e) => {
         });
     };
 
+    const handleSaveOutfit = async () => {
+        if (!user) {
+            alert("Please log in to save outfits.");
+            return;
+        }
+        const hasItem = Object.values(slots).some((slot) => slot !== null);
+        if (!hasItem) {
+            alert("Add at least one item to your outfit before saving.");
+            return;
+        }
+
+        const defaultName = new Date().toLocaleString();
+        const name = window.prompt("Name this outfit:", `Outfit - ${defaultName}`) || `Outfit - ${defaultName}`;
+
+        try {
+            const database = getDatabase();
+            const outfitsRef = ref(database, `users/${user.uid}/outfits`);
+            const newOutfitRef = push(outfitsRef);
+
+            const simplifyItem = (item) =>
+                item
+                    ? {
+                          id: item.id,
+                          name: item.name,
+                          category: item.category,
+                          img: item.img,
+                      }
+                    : null;
+
+            const outfitData = {
+                name,
+                createdAt: new Date().toISOString(),
+                slots: {
+                    hat: simplifyItem(slots.hat),
+                    top: simplifyItem(slots.top),
+                    bottoms: simplifyItem(slots.bottoms),
+                    shoes: simplifyItem(slots.shoes),
+                },
+                weather: forecast
+                    ? {
+                          city: forecast.city,
+                          country: forecast.country,
+                          temp: forecast.temp,
+                          condition: forecast.condition,
+                      }
+                    : null,
+            };
+
+            await set(newOutfitRef, outfitData);
+            alert("Outfit saved!");
+        } catch (err) {
+            console.error("Failed to save outfit:", err);
+            alert("Failed to save outfit. Please try again.");
+        }
+    };
+
+    const handleLoadOutfit = (outfit) => {
+        if (!outfit || !outfit.slots) return;
+
+        setSlots({
+            hat: outfit.slots.hat || null,
+            top: outfit.slots.top || null,
+            bottoms: outfit.slots.bottoms || null,
+            shoes: outfit.slots.shoes || null,
+        });
+    };
+
     return (
         <div className="app">
             <section className="builder-col" aria-labelledby="builder-title">
@@ -196,12 +281,7 @@ const handleFetchWeather = async (e) => {
                                         const randomItem = assignRandomItem(layer);
                                         if (randomItem) addToOutfit(randomItem);
                                     }}>🔁</button>
-                                    <button 
-                                        className="icon-btn delete" 
-                                        onClick={() => deleteItem(layer)}
-                                    >
-                                        🗑
-                                    </button>
+                                    <button className="icon-btn delete" onClick={() => deleteItem(layer)}>🗑 </button>
                                 </div>
                                 <div className="slot">
                                     {slots[layer] ? (
@@ -214,7 +294,7 @@ const handleFetchWeather = async (e) => {
                                             <p className="slot-name">{slots[layer].name}</p>
                                             <p className="slot-meta">{slots[layer].category}</p>
                                         </div>
-                                    ) : (
+                                    ):(
                                         <div className="add-hint"> + add {layer} </div>
                                     )}
                                 </div>
@@ -267,10 +347,11 @@ const handleFetchWeather = async (e) => {
 
                 <div className="actions">
                     <button className="btn clear" onClick={handleClear}>Clear</button>
-                    <button className="btn save">Save Outfit</button>
+                    <button className="btn save" onClick={handleSaveOutfit}>
+                        Save Outfit
+                    </button>
                 </div>
             </section>
-
             <div className="closet-col">
                 <div className="catalog-header">
                     <button className="add-item"onClick={()=>navigate("/inventory")}> + add item</button>
@@ -339,6 +420,56 @@ const handleFetchWeather = async (e) => {
                             <img src={item.img} alt={item.name} className="clothing-item-img" />
                         </div>
                     ))}
+                </section>
+            <section className="saved-outfits">
+                    <h4>Saved Outfits</h4>
+
+                    {savedOutfits.length === 0 && (
+                        <p className="inventory-empty">
+                            You haven’t saved any outfits yet.
+                        </p>
+                    )}
+
+                    {savedOutfits.length > 0 && (
+                        <div className="saved-outfits-grid">
+                            {savedOutfits.map((outfit) => (
+                                <button
+                                    key={outfit.id}
+                                    type="button"
+                                    className="saved-outfit-card"
+                                    onClick={() => handleLoadOutfit(outfit)}
+                                >
+                                    <p className="saved-outfit-name">{outfit.name}</p>
+                                    <div className="saved-outfit-thumbs">
+                                        {['hat', 'top', 'bottoms', 'shoes'].map((slotKey) => {
+                                            const item = outfit.slots?.[slotKey];
+                                            return item ? (
+                                                <img
+                                                    key={slotKey}
+                                                    src={item.img}
+                                                    alt={item.name}
+                                                    className="saved-outfit-thumb"
+                                                />
+                                            ) : (
+                                                <div
+                                                    key={slotKey}
+                                                    className="saved-outfit-thumb empty-slot"
+                                                >
+                                                    {slotKey}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                    {outfit.weather && (
+                                        <p className="saved-outfit-weather">
+                                            {outfit.weather.city} • {outfit.weather.temp}°F •{' '}
+                                            {outfit.weather.condition}
+                                        </p>
+                                    )}
+                                </button>
+                            ))}
+                        </div>
+                    )}
                 </section>
             </div>
         </div>
