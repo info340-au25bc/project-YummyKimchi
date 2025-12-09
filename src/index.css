@@ -699,6 +699,10 @@ ul.subheading {
     animation: fadeIn 0.3s ease-out;
 }
 
+.list-view.subsection {
+    margin-left: 0;
+}
+
 /* Grid view enhancements */
 .clothing-card.grid-view {
     height: 100%;
