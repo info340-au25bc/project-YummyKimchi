@@ -22,7 +22,7 @@ export function LoggedIn(props) {
             <div className="flex-column subsection">
                 <p>You are logged in.</p>
             </div>
-            <div className="submission-box subsection"><motion.button initial={{ scale: 0 }} animate={{ scale: 1 }} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.8 }} type="button" onClick={handleButton}>Logout</motion.button></div>
+            <div className="submission-box subsection"><motion.button initial={{ scale: 0 }} animate={{ scale: 1 }} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.8 }} className='button-styling' type="button" onClick={handleButton}>Logout</motion.button></div>
         </motion.div>
     )
 }

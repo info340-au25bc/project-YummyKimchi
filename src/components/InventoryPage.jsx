@@ -13,9 +13,10 @@ export function InventoryPage(props) {
     const [user, setUser] = useState(null);
     const [viewMode, setViewMode] = useState('grid');
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(12);
+    const [itemsPerPage] = useState(4);
     const [uploadingImage, setUploadingImage] = useState(false);
     const [imagePreview, setImagePreview] = useState(null);
+    const [dateNewest, setDateSort] = useState(true);
     
     const navigate = useNavigate();
     const auth = getAuth();
@@ -37,7 +38,7 @@ export function InventoryPage(props) {
         });
 
         return () => unsubscribe();
-    }, [auth, navigate]);
+    }, [auth, navigate, dateNewest]);
 
     // Load user's inventory from Firebase
     const loadUserInventory = (userId) => {
@@ -51,8 +52,12 @@ export function InventoryPage(props) {
                     id: key,
                     ...data[key]
                 }));
-                // Sort by creation date, newest first
-                itemsArray.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                // Sort by creation date, newest first if dateNewest is true
+                if (dateNewest) {
+                    itemsArray.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                } else {
+                    itemsArray.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+                }
                 setClothingList(itemsArray);
             } else {
                 setClothingList([]);
@@ -167,16 +172,9 @@ export function InventoryPage(props) {
                 fileInputRef.current.value = '';
             }
             
-            alert("Item added successfully!");
         } catch (error) {
             alert("Failed to add item: " + error.message);
         }
-    };
-
-    // Handle editing item
-    const handleEditItem = (item) => {
-        // You can implement edit functionality here if needed
-        alert("Edit functionality would be implemented here");
     };
 
     // Handle deleting item
@@ -236,12 +234,9 @@ export function InventoryPage(props) {
                 return (
                     <div className="flex-row subsection clothing-card list-view" key={item.id}>
                         <div className="clothing-card-content">
-                            <h3 className="subheading clothing-card-heading">{item.description}</h3>
+                            <h3 className="subheading clothing-card-list-heading">{item.description}</h3>
                             <div className="clothing-card-details">
-                                <p>Category: {item.category}</p>
-                                <p>Location: {item.location}</p>
-                                <p>Color: {item.color}</p>
-                                <p>Size: {item.size}</p>
+                                <p><span className='clothing-card-span-styling'>Category:</span> {item.category} | <span className='clothing-card-span-styling'>Location:</span> {item.location} | <span className='clothing-card-span-styling'>Color:</span> {item.color} | <span className='clothing-card-span-styling'>Size:</span> {item.size} | <span className='clothing-card-span-styling'>Date Created:</span> {item.createdAt.split("T")[0]}</p>
                             </div>
                             <div className="submission-box">
                                 <button onClick={() => handleDeleteItem(item.id)}>Delete</button>
@@ -254,12 +249,12 @@ export function InventoryPage(props) {
                     <div className="flex-column subsection clothing-card grid-view" key={item.id}>
                         <img src={item.file} className="clothing-card-img" alt={item.description} />
                         <h3 className="subheading clothing-card-heading">{item.description}</h3>
-                        <p>Category: {item.category}</p>
-                        <p>Location: {item.location}</p>
-                        <p>Color: {item.color}</p>
-                        <p>Size: {item.size}</p>
+                        <p><span className='clothing-card-span-styling'>Category:</span> {item.category}</p>
+                        <p><span className='clothing-card-span-styling'>Location:</span> {item.location}</p>
+                        <p><span className='clothing-card-span-styling'>Color:</span> {item.color}</p>
+                        <p><span className='clothing-card-span-styling'>Size:</span> {item.size}</p>
                         <div className="submission-box">
-                            <button onClick={() => handleDeleteItem(item.id)}>Delete</button>
+                            <motion.button initial={{ scale: 0 }} animate={{ scale: 1 }} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.8 }} onClick={() => handleDeleteItem(item.id)}>Delete</motion.button>
                         </div>
                     </div>
                 );
@@ -276,7 +271,7 @@ export function InventoryPage(props) {
         <div>
             {/* Top image and Title */}
             <div className="header-stack">
-                <img src="/img/main-page-header.avif" alt="Background image of clothes" className="header-img"/>
+                <img src="/img/inventoryheader.jpg" alt="Background image of clothes" className="header-img"/>
                 <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="header-text">
                     <h1 className="header">Your Clothing Inventory</h1>
                     <p className="header-paragraph">Track, organize, and manage your wardrobe</p>
@@ -337,7 +332,7 @@ export function InventoryPage(props) {
                             </select>
                         </div>
                         <div className="flex-column submission-box filter-button">
-                            <button type="button" onClick={handleClearFilters}>Clear Filters</button>
+                            <motion.button initial={{ scale: 0 }} animate={{ scale: 1 }} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.8 }} className='button-styling' type="button" onClick={handleClearFilters}>Clear Filters</motion.button>
                         </div>
                     </div>
                 </div>
@@ -383,7 +378,7 @@ export function InventoryPage(props) {
                         </div>
                         <div className="flex-column submission-box form-field">
                             <label htmlFor="itemImage">Image</label>
-                            <input 
+                            <motion.input initial={{ scale: 0 }} animate={{ scale: 1 }} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.8 }}
                                 type="file" 
                                 id="itemImage" 
                                 name="itemImage" 
@@ -398,9 +393,9 @@ export function InventoryPage(props) {
                             )}
                         </div>
                         <div className="flex-column submission-box full-width">
-                            <button type="submit" disabled={uploadingImage}>
+                            <motion.button initial={{ scale: 0 }} animate={{ scale: 1 }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.8 }} type="submit" disabled={uploadingImage} className='button-styling'>
                                 {uploadingImage ? "Uploading Image..." : "Add to Inventory"}
-                            </button>
+                            </motion.button>
                         </div>
                     </form>
                 </div>
@@ -412,18 +407,21 @@ export function InventoryPage(props) {
                     <div className="inventory-header">
                         <h2 className="header">Your Clothing Items ({filteredClothingList.length})</h2>
                         <div className="view-controls">
-                            <button 
+                            <motion.button initial={{ scale: 0 }} animate={{ scale: 1 }} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.8 }}
                                 className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`}
-                                onClick={() => setViewMode('grid')}
-                            >
-                                Grid
-                            </button>
-                            <button 
+                                onClick={() => setViewMode('grid')}>
+                                Picture
+                            </motion.button>
+                            <motion.button initial={{ scale: 0 }} animate={{ scale: 1 }} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.8 }}
                                 className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
-                                onClick={() => setViewMode('list')}
-                            >
+                                onClick={() => setViewMode('list')}>
                                 List
-                            </button>
+                            </motion.button>
+                            <motion.button initial={{ scale: 0 }} animate={{ scale: 1 }} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.8 }}
+                                className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
+                                onClick={() => setDateSort(!dateNewest)}>
+                                Date Sort
+                            </motion.button>
                         </div>
                     </div>
                     
@@ -434,13 +432,13 @@ export function InventoryPage(props) {
                     {/* Pagination */}
                     {totalPages > 1 && (
                         <div className="pagination">
-                            <button 
+                            <motion.button initial={{ scale: 0 }} animate={{ scale: 1 }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.8 }}
                                 onClick={() => paginate(currentPage - 1)} 
                                 disabled={currentPage === 1}
                                 className="page-btn"
                             >
                                 Previous
-                            </button>
+                            </motion.button>
                             
                             <div className="page-numbers">
                                 {pageNumbers.map(number => (
@@ -454,13 +452,13 @@ export function InventoryPage(props) {
                                 ))}
                             </div>
                             
-                            <button 
+                            <motion.button initial={{ scale: 0 }} animate={{ scale: 1 }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.8 }}
                                 onClick={() => paginate(currentPage + 1)} 
                                 disabled={currentPage === totalPages}
                                 className="page-btn"
                             >
                                 Next
-                            </button>
+                            </motion.button>
                         </div>
                     )}
                 </div>
