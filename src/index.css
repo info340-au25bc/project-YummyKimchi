@@ -382,6 +382,11 @@ header {
     justify-items: center;
 }
 
+.inventory-image {
+    max-width:'100px';
+    margin-top: '10px';
+}
+
 .clothing-card {
     background-color: #3a2c2c;
     padding: 1.5rem;

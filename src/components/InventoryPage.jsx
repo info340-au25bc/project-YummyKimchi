@@ -235,18 +235,16 @@ export function InventoryPage(props) {
             if (viewMode === 'list') {
                 return (
                     <div className="flex-row subsection clothing-card list-view" key={item.id}>
-                        <img src={item.file} className="clothing-card-img list-img" alt={item.description} />
                         <div className="clothing-card-content">
                             <h3 className="subheading clothing-card-heading">{item.description}</h3>
                             <div className="clothing-card-details">
-                                <p><strong>Category:</strong> {item.category}</p>
-                                <p><strong>Location:</strong> {item.location}</p>
-                                <p><strong>Color:</strong> {item.color}</p>
-                                <p><strong>Size:</strong> {item.size}</p>
+                                <p>Category: {item.category}</p>
+                                <p>Location: {item.location}</p>
+                                <p>Color: {item.color}</p>
+                                <p>Size: {item.size}</p>
                             </div>
                             <div className="submission-box">
-                                <button onClick={() => handleEditItem(item)}>Edit Item</button>
-                                <button onClick={() => handleDeleteItem(item.id)} style={{marginLeft: '10px'}}>Delete</button>
+                                <button onClick={() => handleDeleteItem(item.id)}>Delete</button>
                             </div>
                         </div>
                     </div>
@@ -256,13 +254,12 @@ export function InventoryPage(props) {
                     <div className="flex-column subsection clothing-card grid-view" key={item.id}>
                         <img src={item.file} className="clothing-card-img" alt={item.description} />
                         <h3 className="subheading clothing-card-heading">{item.description}</h3>
-                        <p><strong>Category:</strong> {item.category}</p>
-                        <p><strong>Location:</strong> {item.location}</p>
-                        <p><strong>Color:</strong> {item.color}</p>
-                        <p><strong>Size:</strong> {item.size}</p>
+                        <p>Category: {item.category}</p>
+                        <p>Location: {item.location}</p>
+                        <p>Color: {item.color}</p>
+                        <p>Size: {item.size}</p>
                         <div className="submission-box">
-                            <button onClick={() => handleEditItem(item)}>Edit Item</button>
-                            <button onClick={() => handleDeleteItem(item.id)} style={{marginLeft: '10px'}}>Delete</button>
+                            <button onClick={() => handleDeleteItem(item.id)}>Delete</button>
                         </div>
                     </div>
                 );
@@ -396,7 +393,7 @@ export function InventoryPage(props) {
                             />
                             {imagePreview && (
                                 <div className="image-preview">
-                                    <img src={imagePreview} alt="Preview" style={{maxWidth: '100px', marginTop: '10px'}} />
+                                    <img src={imagePreview} alt="Preview" className="inventory-image" />
                                 </div>
                             )}
                         </div>
